@@ -1,0 +1,22 @@
+<resources>
+    <string name="app_version">v1.0.0</string>
+    <string name="app_name">Viewed</string>
+    <string name="about">About</string>
+    <string name="swipe_to_find_out_more"><![CDATA[swipe to find out more >>]]></string>
+    <string name="viewed">"Viewed "</string>
+    <string name="you_are_what_you_watch">You are what you watch</string>
+    <string name="designed_by">Designed by</string>
+    <string name="dayker">Dayker</string>
+    <string name="found_a_bug">Found a bug?</string>
+    <string name="contact_me">Contact me!</string>
+    <string name="save_the_movies_and_tv_shows_you_ve_watched">Save the movies and TV shows you\'ve watched</string>
+    <string name="rate_them">Rate them</string>
+    <string name="write_reviews_and_take_notes">Write reviews and take notes</string>
+    <string name="share_your_reviews_with_your_friends">Share your reviews with your friends</string>
+    <string name="find_new">Find new</string>
+    <string name="movies_and_shows_in_our_picks_and">" movies and shows in our picks and "</string>
+    <string name="save">save</string>
+    <string name="them">" them "</string>
+    <string name="to_watch_later">to watch later</string>
+    <string name="get_started_now">Get started now!</string>
+</resources>
