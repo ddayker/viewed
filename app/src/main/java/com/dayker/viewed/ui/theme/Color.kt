@@ -1,4 +1,4 @@
-package com.dayker.viewed.presentation.theme
+package com.dayker.viewed.ui.theme
 
 import androidx.compose.ui.graphics.Color
 
@@ -10,11 +10,6 @@ val md_theme_light_secondary = Color(0xFF585E71)
 val md_theme_light_onSecondary = Color(0xFFFFFFFF)
 val md_theme_light_secondaryContainer = Color(0xFFDDE2F9)
 val md_theme_light_onSecondaryContainer = Color(0xFF151B2C)
-
-//val md_theme_light_tertiary = Color(0xFF765B00)
-//val md_theme_light_onTertiary = Color(0xFFFFFFFF)
-//val md_theme_light_tertiaryContainer = Color(0xFFFFDF94)
-//val md_theme_light_onTertiaryContainer = Color(0xFF241A00)
 val md_theme_light_tertiary = Color(0xFFDDA90B)
 val md_theme_light_onTertiary = Color(0xFF3E2E00)
 val md_theme_light_tertiaryContainer = Color(0xFF594400)

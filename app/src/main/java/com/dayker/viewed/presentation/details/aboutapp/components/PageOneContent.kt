@@ -1,5 +1,6 @@
-package com.dayker.viewed.presentation.ui.aboutapp.components
+package com.dayker.viewed.presentation.details.aboutapp.components
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -20,20 +21,29 @@ import androidx.compose.ui.unit.dp
 import com.dayker.viewed.R
 
 @Composable
-fun PageOneContentPortrait(modifier: Modifier = Modifier) {
+fun PageOneContentPortrait(
+    modifier: Modifier = Modifier, onClickTagAction: () -> Unit,
+    onClickBugReportAction: () -> Unit
+) {
     Box(modifier = modifier.fillMaxSize(), contentAlignment = Alignment.TopCenter) {
         Column(horizontalAlignment = Alignment.CenterHorizontally) {
             ViewedAnimatedLogo(
                 modifier = Modifier.padding(80.dp),
                 animationModifier = Modifier.size(200.dp)
             )
-            DesignedTagAndBugReport()
+            DesignedTagAndBugReport(
+                onClickBugReportAction = onClickBugReportAction,
+                onClickTagAction = onClickTagAction
+            )
         }
     }
 }
 
 @Composable
-fun PageOneContentLandscape(modifier: Modifier = Modifier) {
+fun PageOneContentLandscape(
+    modifier: Modifier = Modifier, onClickTagAction: () -> Unit,
+    onClickBugReportAction: () -> Unit
+) {
     Box(
         modifier = modifier
             .fillMaxSize()
@@ -48,7 +58,10 @@ fun PageOneContentLandscape(modifier: Modifier = Modifier) {
                 modifier = Modifier.padding(start = 100.dp),
                 animationModifier = Modifier.size(100.dp)
             )
-            DesignedTagAndBugReport()
+            DesignedTagAndBugReport(
+                onClickBugReportAction = onClickBugReportAction,
+                onClickTagAction = onClickTagAction
+            )
         }
     }
 }
@@ -76,7 +89,11 @@ fun ViewedAnimatedLogo(modifier: Modifier = Modifier, animationModifier: Modifie
 }
 
 @Composable
-fun DesignedTagAndBugReport(modifier: Modifier = Modifier) {
+fun DesignedTagAndBugReport(
+    modifier: Modifier = Modifier,
+    onClickTagAction: () -> Unit,
+    onClickBugReportAction: () -> Unit
+) {
     Column(
         modifier = modifier.fillMaxSize(),
         verticalArrangement = Arrangement.Center,
@@ -92,7 +109,9 @@ fun DesignedTagAndBugReport(modifier: Modifier = Modifier) {
                 text = stringResource(R.string.dayker),
                 color = MaterialTheme.colorScheme.onTertiaryContainer,
                 style = MaterialTheme.typography.bodyMedium,
-                modifier = Modifier.padding(top = 5.dp, start = 3.dp),
+                modifier = Modifier
+                    .padding(top = 5.dp, start = 3.dp)
+                    .clickable(onClick = onClickTagAction),
                 textDecoration = TextDecoration.Underline
             )
         }
@@ -106,7 +125,9 @@ fun DesignedTagAndBugReport(modifier: Modifier = Modifier) {
                 text = stringResource(R.string.contact_me),
                 color = MaterialTheme.colorScheme.onTertiaryContainer,
                 style = MaterialTheme.typography.bodyMedium,
-                modifier = Modifier.padding(top = 5.dp, start = 3.dp),
+                modifier = Modifier
+                    .padding(top = 5.dp, start = 3.dp)
+                    .clickable(onClick = onClickBugReportAction),
                 textDecoration = TextDecoration.Underline
             )
         }

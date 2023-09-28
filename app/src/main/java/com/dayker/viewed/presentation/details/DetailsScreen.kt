@@ -1,4 +1,4 @@
-package com.dayker.viewed.presentation.ui.home
+package com.dayker.viewed.presentation.details
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
@@ -7,7 +7,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Info
-import androidx.compose.material3.BottomAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -21,7 +20,10 @@ import androidx.compose.ui.unit.dp
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun HomeScreen(modifier: Modifier = Modifier, actionAboutApp: () -> Unit) {
+fun DetailsScreen(
+    modifier: Modifier = Modifier,
+    onAboutAppClicked: () -> Unit
+) {
     Scaffold(
         modifier = modifier,
         topBar = {
@@ -37,7 +39,7 @@ fun HomeScreen(modifier: Modifier = Modifier, actionAboutApp: () -> Unit) {
                         horizontalArrangement = Arrangement.End
                     ) {
                         IconButton(onClick = {
-                            actionAboutApp()
+                            onAboutAppClicked()
                         }) {
                             Icon(
                                 Icons.Filled.Info,
@@ -49,11 +51,6 @@ fun HomeScreen(modifier: Modifier = Modifier, actionAboutApp: () -> Unit) {
                 }
             )
         },
-        bottomBar = {
-            BottomAppBar {
-
-            }
-        }
     ) { padding ->
         println(padding)
     }

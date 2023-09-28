@@ -1,4 +1,4 @@
-package com.dayker.viewed.presentation.ui.aboutapp.components
+package com.dayker.viewed.presentation.details.aboutapp.components
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
@@ -25,12 +25,12 @@ import androidx.compose.ui.unit.dp
 import com.dayker.viewed.R
 
 @Composable
-fun PageTwoContentPortrait(modifier: Modifier = Modifier, appDescription: List<Int>) {
+fun PageTwoContentPortrait(modifier: Modifier = Modifier) {
     Box(modifier = modifier.fillMaxSize(), contentAlignment = Alignment.TopCenter) {
         Column(horizontalAlignment = Alignment.CenterHorizontally) {
             PosterAnimation()
             AppDescriptionList(
-                appDescription = appDescription,
+                appDescription = getAppDescriptionResource(),
                 modifier = Modifier.padding(horizontal = 30.dp)
             )
         }
@@ -38,7 +38,7 @@ fun PageTwoContentPortrait(modifier: Modifier = Modifier, appDescription: List<I
 }
 
 @Composable
-fun PageTwoContentLandscape(modifier: Modifier = Modifier, appDescription: List<Int>) {
+fun PageTwoContentLandscape(modifier: Modifier = Modifier) {
     Box(modifier = modifier.fillMaxSize(), contentAlignment = Alignment.TopCenter) {
         Row(
             horizontalArrangement = Arrangement.Center,
@@ -46,7 +46,7 @@ fun PageTwoContentLandscape(modifier: Modifier = Modifier, appDescription: List<
         ) {
             PosterAnimation()
             AppDescriptionList(
-                appDescription = appDescription,
+                appDescription = getAppDescriptionResource(),
                 modifier = Modifier.padding()
             )
         }
@@ -94,3 +94,10 @@ fun AppDescriptionList(modifier: Modifier = Modifier, appDescription: List<Int>)
         }
     }
 }
+
+fun getAppDescriptionResource() =
+    listOf(
+        R.string.rate_them,
+        R.string.write_reviews_and_take_notes,
+        R.string.share_your_reviews_with_your_friends
+    )

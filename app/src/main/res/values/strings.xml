@@ -19,4 +19,12 @@
     <string name="them">" them "</string>
     <string name="to_watch_later">to watch later</string>
     <string name="get_started_now">Get started now!</string>
+    <string name="viewed_bug_report">Viewed Bug Report</string>
+    <string name="contact_email">iamdayker@gmail.com</string>
+    <string name="app_version_sdk_device_problem">App version: %1$s SDK %2$s \nDevice: %3$s \nProblem:</string>
+    <string name="linkedIn_link">https://www.linkedin.com/in/dayker/</string>
+    <string name="mailto_subject_body_to"><![CDATA[mailto:?subject=%1$s&body=%2$s&to=%3$s]]></string>
+    <string name="watched">Watched</string>
+    <string name="discover">Discover</string>
+    <string name="details">Details</string>
 </resources>

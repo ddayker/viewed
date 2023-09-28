@@ -1,4 +1,4 @@
-package com.dayker.viewed.presentation.ui.aboutapp.components
+package com.dayker.viewed.presentation.details.aboutapp.components
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
