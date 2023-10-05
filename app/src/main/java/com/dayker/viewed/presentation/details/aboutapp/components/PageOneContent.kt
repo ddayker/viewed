@@ -102,13 +102,13 @@ fun DesignedTagAndBugReport(
         Row() {
             Text(
                 text = stringResource(R.string.designed_by),
-                style = MaterialTheme.typography.bodyMedium,
+                style = MaterialTheme.typography.bodySmall,
                 modifier = Modifier.padding(top = 5.dp)
             )
             Text(
                 text = stringResource(R.string.dayker),
                 color = MaterialTheme.colorScheme.onTertiaryContainer,
-                style = MaterialTheme.typography.bodyMedium,
+                style = MaterialTheme.typography.bodySmall,
                 modifier = Modifier
                     .padding(top = 5.dp, start = 3.dp)
                     .clickable(onClick = onClickTagAction),
@@ -118,13 +118,13 @@ fun DesignedTagAndBugReport(
         Row(modifier = Modifier.padding(top = 2.dp)) {
             Text(
                 text = stringResource(R.string.found_a_bug),
-                style = MaterialTheme.typography.bodyMedium,
+                style = MaterialTheme.typography.bodySmall,
                 modifier = Modifier.padding(top = 5.dp)
             )
             Text(
                 text = stringResource(R.string.contact_me),
                 color = MaterialTheme.colorScheme.onTertiaryContainer,
-                style = MaterialTheme.typography.bodyMedium,
+                style = MaterialTheme.typography.bodySmall,
                 modifier = Modifier
                     .padding(top = 5.dp, start = 3.dp)
                     .clickable(onClick = onClickBugReportAction),

@@ -11,6 +11,10 @@ import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.NavigationBarItemDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -25,9 +29,12 @@ fun AppBottomBar(
     screens: List<DestinationScreen>,
     elementOnClick: (String) -> Unit
 ) {
-    val isDestination = screens.any { it.route == currentDestination?.route }
+    var visible by remember {
+        mutableStateOf(true)
+    }
+    visible = screens.any { it.route == currentDestination?.route }
     AnimatedVisibility(
-        visible = isDestination,
+        visible = visible,
         enter = slideInVertically(initialOffsetY = { it }),
         exit = slideOutVertically(targetOffsetY = { it })
     ) {

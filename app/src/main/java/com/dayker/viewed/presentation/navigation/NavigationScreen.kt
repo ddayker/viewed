@@ -1,12 +1,13 @@
 package com.dayker.viewed.presentation.navigation
 
-import android.annotation.SuppressLint
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.windowsizeclass.WindowSizeClass
 import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.Modifier
 import androidx.navigation.NavDestination
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
@@ -85,7 +86,6 @@ fun AppNavigationLandscape(
     }
 }
 
-@SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
 fun AppNavigationPortrait(
     navController: NavHostController,
@@ -103,7 +103,11 @@ fun AppNavigationPortrait(
             )
         }
     ) {
-        NavigationBarNavGraph(navController = navController, windowSize = windowSize)
+        NavigationBarNavGraph(
+            navController = navController,
+            windowSize = windowSize,
+            modifier = Modifier.padding(bottom = it.calculateBottomPadding())
+        )
     }
 }
 

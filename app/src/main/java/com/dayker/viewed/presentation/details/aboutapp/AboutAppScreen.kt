@@ -58,7 +58,7 @@ fun AboutAppScreen(
                 pageCount = pagerState.pageCount,
                 modifier = Modifier
                     .fillMaxWidth()
-                    .height(70.dp)
+                    .height(80.dp)
             )
         }
     ) { padding ->

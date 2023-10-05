@@ -11,9 +11,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 
 @Composable
-fun DiscoverScreen(name: String, onClick: () -> Unit) {
+fun DiscoverScreen(modifier: Modifier = Modifier, name: String, onClick: () -> Unit) {
     Box(
-        modifier = Modifier.fillMaxSize(),
+        modifier = modifier.fillMaxSize(),
         contentAlignment = Alignment.Center
     ) {
         Text(

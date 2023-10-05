@@ -27,4 +27,15 @@
     <string name="watched">Watched</string>
     <string name="discover">Discover</string>
     <string name="details">Details</string>
+    <string name="descending">Descending</string>
+    <string name="ascending">Ascending</string>
+    <string name="release_date">Release</string>
+    <string name="viewing_date">Viewing</string>
+    <string name="rating">Rating</string>
+    <string name="_10">10</string>
+    <string name="rating_format">%1$s/</string>
+    <string name="min">" min"</string>
+    <string name="no_movie_message">No movie has been\n added yet 💔</string>
+    <string name="your_movies">Your movies</string>
+    <string name="watched_count_format">(%1$s)</string>
 </resources>
