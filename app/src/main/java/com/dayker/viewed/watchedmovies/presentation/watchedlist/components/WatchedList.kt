@@ -38,7 +38,7 @@ fun WatchedList(
                             .padding(vertical = 16.dp, horizontal = 8.dp),
                     )
                 }
-                Spacer(modifier = Modifier.height(12.dp))
+                Spacer(modifier = Modifier.height(5.dp))
             }
             items(movies) { movie ->
                 WatchedItem(movie = movie)

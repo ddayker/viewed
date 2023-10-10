@@ -2,10 +2,10 @@ package com.dayker.viewed.watchedmovies.domain.model
 
 data class Movie(
     val title: String,
-    val duration: Int,
+    val releaseDate: String,
+    val duration: Long,
     val rating: Double,
     val review: String,
     val viewingDate: String,
-    val releaseDate: String,
-    val imageURL: String? = null
+    val imageURL: String? = null,
 )

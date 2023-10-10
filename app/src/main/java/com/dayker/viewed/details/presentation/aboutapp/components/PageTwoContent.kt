@@ -83,7 +83,7 @@ fun AppDescriptionList(modifier: Modifier = Modifier, appDescription: List<Int>)
     ) {
         Text(
             text = stringResource(R.string.save_the_movies_and_tv_shows_you_ve_watched),
-            style = MaterialTheme.typography.bodyLarge,
+            style = MaterialTheme.typography.displayLarge,
         )
         for (content in appDescription) {
             Text(

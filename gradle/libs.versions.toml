@@ -7,7 +7,7 @@ androidx-test-ext-junit = "1.1.5"
 espresso-core = "3.5.1"
 lifecycle-runtime-ktx = "2.6.2"
 activity-compose = "1.7.2"
-compose-bom = "2023.09.00"
+compose-bom = "2023.10.00"
 accompanist-permissions = "0.33.1-alpha"
 accompanist-navigation-material = "0.33.1-alpha"
 work-runtime-ktx = "2.8.1"
@@ -34,6 +34,12 @@ ksp = "1.8.10-1.0.9"
 room = "2.5.2"
 lottie-compose = "6.0.0"
 window_size = "1.1.1"
+core = "1.2.0"
+calendar = "1.2.0"
+duration = "1.2.0"
+input = "1.2.0"
+list = "1.2.0"
+state = "1.2.0"
 
 [libraries]
 core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "core-ktx" }
@@ -81,6 +87,12 @@ room-runtime = { group = "androidx.room", name = "room-runtime", version.ref = "
 room-compiler = { group = "androidx.room", name = "room-compiler", version.ref = "room" }
 lottie-compose = { group = "com.airbnb.android", name = "lottie-compose", version.ref = "lottie-compose" }
 material3-window-size = { group = "androidx.compose.material3", name = "material3-window-size-class", version.ref = "window_size" }
+core = { group = "com.maxkeppeler.sheets-compose-dialogs", name = "core", version.ref = "core" }
+calendar = { group = "com.maxkeppeler.sheets-compose-dialogs", name = "calendar", version.ref = "calendar" }
+duration = { group = "com.maxkeppeler.sheets-compose-dialogs", name = "duration", version.ref = "duration" }
+input = { group = "com.maxkeppeler.sheets-compose-dialogs", name = "input", version.ref = "input" }
+list = { group = "com.maxkeppeler.sheets-compose-dialogs", name = "list", version.ref = "list" }
+state = { group = "com.maxkeppeler.sheets-compose-dialogs", name = "state", version.ref = "state" }
 
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }

@@ -79,7 +79,7 @@ fun AppDescriptionPageThree(modifier: Modifier = Modifier) {
                     append(stringResource(R.string.to_watch_later))
                 }
             },
-            style = MaterialTheme.typography.bodyLarge,
+            style = MaterialTheme.typography.displayLarge,
             modifier = Modifier.padding(horizontal = 30.dp)
         )
         Text(

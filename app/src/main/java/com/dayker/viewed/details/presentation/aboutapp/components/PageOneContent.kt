@@ -78,7 +78,7 @@ fun ViewedAnimatedLogo(modifier: Modifier = Modifier, animationModifier: Modifie
         )
         Text(
             text = stringResource(R.string.viewed) + stringResource(R.string.app_version),
-            style = MaterialTheme.typography.bodyLarge,
+            style = MaterialTheme.typography.displayLarge,
         )
         Text(
             text = stringResource(R.string.you_are_what_you_watch),

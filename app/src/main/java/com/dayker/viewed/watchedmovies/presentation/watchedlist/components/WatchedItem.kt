@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -22,8 +23,10 @@ import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.dayker.viewed.R
 import com.dayker.viewed.watchedmovies.domain.model.Movie
+import com.dayker.viewed.watchedmovies.presentation.components.DefaultMovieImage
 
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
@@ -39,10 +42,15 @@ fun WatchedItem(
         Row {
             Column(modifier.fillMaxHeight(), verticalArrangement = Arrangement.Center) {
                 if (movie.imageURL.isNullOrEmpty()) {
-                    DefaultImage()
+                    DefaultMovieImage(
+                        modifier = Modifier
+                            .padding(10.dp)
+                            .height(180.dp)
+                            .width(120.dp)
+                    )
                 } else {
                     // TODO: load image from URL
-                    DefaultImage()
+                    DefaultMovieImage()
                 }
             }
             Column(
@@ -62,7 +70,7 @@ fun WatchedItem(
                         )
                         Text(
                             text = stringResource(R.string._10),
-                            style = MaterialTheme.typography.displaySmall,
+                            style = MaterialTheme.typography.displaySmall.copy(fontSize = 14.sp),
                             textAlign = TextAlign.Center
                         )
                         Icon(
@@ -78,8 +86,8 @@ fun WatchedItem(
                             style = MaterialTheme.typography.displayMedium
                         )
                         Text(
-                            text = stringResource(R.string.min),
-                            style = MaterialTheme.typography.displaySmall,
+                            text = stringResource(R.string._min),
+                            style = MaterialTheme.typography.displaySmall.copy(fontSize = 14.sp),
                             textAlign = TextAlign.Center
                         )
                         Icon(

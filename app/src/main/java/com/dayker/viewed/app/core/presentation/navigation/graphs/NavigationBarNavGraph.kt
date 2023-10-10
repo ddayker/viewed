@@ -13,10 +13,10 @@ import com.dayker.viewed.app.core.presentation.navigation.navanimations.outLeftA
 import com.dayker.viewed.app.core.presentation.navigation.navanimations.outRightAnimation
 import com.dayker.viewed.app.core.presentation.navigation.screens.DestinationScreen
 import com.dayker.viewed.details.presentation.DetailsScreen
-import com.dayker.viewed.details.presentation.navigation.DetailsScreen
 import com.dayker.viewed.details.presentation.navigation.detailsNavGraph
 import com.dayker.viewed.discovermovies.presentation.DiscoverScreen
-import com.dayker.viewed.watchedmovies.presentation.watchedlist.WatchedScreen
+import com.dayker.viewed.watchedmovies.presentation.navigation.watchedNavGraph
+import com.dayker.viewed.watchedmovies.presentation.watchedlist.WatchedListScreen
 
 @SuppressLint("RestrictedApi")
 @Composable
@@ -33,20 +33,45 @@ fun NavigationBarNavGraph(
         composable(
             route = DestinationScreen.Watched.route,
             enterTransition = {
-                intoLeftAnimation()
+                when (navController.previousBackStackEntry?.destination?.route) {
+                    DestinationScreen.Discover.route, DestinationScreen.Details.route -> {
+                        intoLeftAnimation()
+                    }
+
+                    else -> null
+                }
             },
             popEnterTransition = {
-                intoLeftAnimation()
+                when (navController.previousBackStackEntry?.destination?.route) {
+                    DestinationScreen.Discover.route, DestinationScreen.Details.route -> {
+                        intoLeftAnimation()
+                    }
+
+                    else -> null
+                }
             },
             exitTransition = {
-                outRightAnimation()
+                when (navController.currentDestination?.route) {
+                    DestinationScreen.Discover.route, DestinationScreen.Details.route -> {
+                        outRightAnimation()
+                    }
+
+                    else -> null
+                }
             },
             popExitTransition = {
-                outRightAnimation()
+                when (navController.currentDestination?.route) {
+                    DestinationScreen.Discover.route, DestinationScreen.Details.route -> {
+                        outRightAnimation()
+                    }
+
+                    else -> null
+                }
             }
         ) {
-            WatchedScreen(
-                modifier = modifier
+            WatchedListScreen(
+                modifier = modifier,
+                navController = navController
             )
         }
         composable(
@@ -135,11 +160,10 @@ fun NavigationBarNavGraph(
         ) {
             DetailsScreen(
                 modifier = modifier,
-                onAboutAppClicked = {
-                    navController.navigate(DetailsScreen.AboutApp.route)
-                }
+                navController = navController
             )
         }
         detailsNavGraph(navController = navController, windowSize = windowSize)
+        watchedNavGraph(navController = navController, windowSize = windowSize)
     }
 }

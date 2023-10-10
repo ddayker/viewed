@@ -17,12 +17,14 @@ import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
+import com.dayker.viewed.details.presentation.navigation.DetailsScreen
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun DetailsScreen(
     modifier: Modifier = Modifier,
-    onAboutAppClicked: () -> Unit
+    navController: NavController
 ) {
     Scaffold(
         modifier = modifier,
@@ -39,7 +41,7 @@ fun DetailsScreen(
                         horizontalArrangement = Arrangement.End
                     ) {
                         IconButton(onClick = {
-                            onAboutAppClicked()
+                            navController.navigate(DetailsScreen.AboutApp.route)
                         }) {
                             Icon(
                                 Icons.Filled.Info,

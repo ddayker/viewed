@@ -55,13 +55,13 @@ fun WatchedTopBar(
                     Text(
                         modifier = Modifier.padding(8.dp),
                         text = stringResource(R.string.your_movies),
-                        style = MaterialTheme.typography.bodyLarge,
+                        style = MaterialTheme.typography.displayLarge,
                         color = MaterialTheme.colorScheme.onBackground
                     )
                     Text(
                         modifier = Modifier.padding(2.dp),
                         text = stringResource(R.string.watched_count_format, watchedCount),
-                        style = MaterialTheme.typography.bodyLarge,
+                        style = MaterialTheme.typography.displayLarge,
                         fontSize = 16.sp,
                         color = MaterialTheme.colorScheme.onTertiaryContainer
                     )

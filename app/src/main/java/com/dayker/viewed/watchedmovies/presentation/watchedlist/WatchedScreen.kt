@@ -27,14 +27,17 @@ import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.input.nestedscroll.NestedScrollConnection
 import androidx.compose.ui.input.nestedscroll.NestedScrollSource
 import androidx.compose.ui.input.nestedscroll.nestedScroll
+import androidx.navigation.NavController
+import com.dayker.viewed.watchedmovies.presentation.navigation.WatchedScreen
 import com.dayker.viewed.watchedmovies.presentation.watchedlist.components.WatchedList
 import com.dayker.viewed.watchedmovies.presentation.watchedlist.components.WatchedTopBar
 import org.koin.androidx.compose.getViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun WatchedScreen(
+fun WatchedListScreen(
     modifier: Modifier = Modifier,
+    navController: NavController,
     viewModel: WatchedViewModel = getViewModel()
 ) {
 
@@ -79,7 +82,7 @@ fun WatchedScreen(
             ) {
                 LargeFloatingActionButton(
                     onClick = {
-
+                        navController.navigate(WatchedScreen.AddEditMovieScreen.route)
                     },
                     containerColor = MaterialTheme.colorScheme.onTertiaryContainer
                 ) {

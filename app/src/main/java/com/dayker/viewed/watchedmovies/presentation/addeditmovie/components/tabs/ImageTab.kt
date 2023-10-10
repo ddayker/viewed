@@ -1,0 +1,83 @@
+package com.dayker.viewed.watchedmovies.presentation.addeditmovie.components.tabs
+
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.PickVisualMediaRequest
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.windowsizeclass.WindowSizeClass
+import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.unit.dp
+import com.dayker.viewed.R
+import com.dayker.viewed.watchedmovies.presentation.addeditmovie.AddEditMovieEvent
+import com.dayker.viewed.watchedmovies.presentation.addeditmovie.AddEditMovieViewModel
+import com.dayker.viewed.watchedmovies.presentation.components.MovieImage
+import com.google.accompanist.adaptive.HorizontalTwoPaneStrategy
+import com.google.accompanist.adaptive.TwoPane
+import com.google.accompanist.adaptive.VerticalTwoPaneStrategy
+import org.koin.androidx.compose.getViewModel
+
+@Composable
+fun ImageTab(
+    modifier: Modifier = Modifier,
+    windowSize: WindowSizeClass,
+    viewModel: AddEditMovieViewModel = getViewModel()
+) {
+    val imageUri = viewModel.movieState.value.imageURL
+    val photoPickerLauncher = rememberLauncherForActivityResult(
+        contract = ActivityResultContracts.PickVisualMedia(),
+        onResult = { uri -> viewModel.onEvent(AddEditMovieEvent.ChangeImageURL(uri.toString())) }
+    )
+    TwoPane(
+        modifier = modifier,
+        first = {
+            MovieImage(imageUri = imageUri)
+        },
+        second = {
+            Box(
+                modifier = Modifier.fillMaxSize(),
+                contentAlignment = Alignment.TopCenter,
+            ) {
+                Button(
+                    onClick = {
+                        photoPickerLauncher.launch(
+                            PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly)
+                        )
+                    },
+                    shape = RoundedCornerShape(20.dp),
+                    modifier = Modifier
+                        .padding(top = 25.dp)
+                        .size(90.dp),
+                    colors = ButtonDefaults.buttonColors(
+                        contentColor = MaterialTheme.colorScheme.background,
+                        containerColor = MaterialTheme.colorScheme.onTertiaryContainer
+                    )
+                ) {
+                    Icon(
+                        painter = painterResource(id = R.drawable.baseline_download_24),
+                        contentDescription = null,
+                        modifier = Modifier.size(34.dp)
+                    )
+                }
+            }
+        },
+        strategy = when (windowSize.widthSizeClass) {
+            WindowWidthSizeClass.Compact -> VerticalTwoPaneStrategy(0.6f)
+            else -> {
+                HorizontalTwoPaneStrategy(0.6f)
+            }
+        },
+        displayFeatures = listOf()
+    )
+}

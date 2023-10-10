@@ -40,15 +40,15 @@ val Typography = Typography(
     ),
     bodyLarge = TextStyle(
         fontWeight = FontWeight.Bold,
-        fontSize = 28.sp,
-        lineHeight = 30.sp,
+        fontSize = 20.sp,
+        lineHeight = 20.sp,
         letterSpacing = 0.1.sp,
         fontFamily = montserratFamily,
     ),
     bodyMedium = TextStyle(
         fontWeight = FontWeight.SemiBold,
-        fontSize = 23.sp,
-        lineHeight = 24.sp,
+        fontSize = 22.sp,
+        lineHeight = 22.sp,
         letterSpacing = 0.1.sp,
         fontFamily = montserratFamily,
     ),
@@ -68,9 +68,16 @@ val Typography = Typography(
     ),
     labelSmall = TextStyle(
         fontWeight = FontWeight.Normal,
-        fontSize = 12.sp,
+        fontSize = 13.sp,
         lineHeight = 16.sp,
         letterSpacing = 0.25.sp,
+        fontFamily = montserratFamily,
+    ),
+    displayLarge = TextStyle(
+        fontWeight = FontWeight.Bold,
+        fontSize = 28.sp,
+        lineHeight = 30.sp,
+        letterSpacing = 0.1.sp,
         fontFamily = montserratFamily,
     ),
     displayMedium = TextStyle(
@@ -82,7 +89,7 @@ val Typography = Typography(
     ),
     displaySmall = TextStyle(
         fontWeight = FontWeight.SemiBold,
-        fontSize = 14.sp,
+        fontSize = 24.sp,
         lineHeight = 26.sp,
         letterSpacing = 0.1.sp,
         fontFamily = montserratFamily,
