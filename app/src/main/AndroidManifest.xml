@@ -12,6 +12,7 @@
     <application
         android:name=".app.App"
         android:allowBackup="true"
+        android:configChanges="uiMode"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:enableOnBackInvokedCallback="true"
         android:fullBackupContent="@xml/backup_rules"

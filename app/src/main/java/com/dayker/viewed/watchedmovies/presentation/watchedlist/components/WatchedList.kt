@@ -19,12 +19,16 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.dayker.viewed.R
 import com.dayker.viewed.watchedmovies.domain.model.Movie
+import com.dayker.viewed.watchedmovies.domain.util.MoviesOrder
 
 @Composable
 fun WatchedList(
     modifier: Modifier = Modifier,
     isOrderSectionVisible: Boolean,
     movies: List<Movie> = emptyList(),
+    onMovieClick: (Long) -> Unit,
+    onOrderChange: (MoviesOrder) -> Unit,
+    order: MoviesOrder
 ) {
     if (movies.isNotEmpty()) {
         LazyColumn(modifier = modifier) {
@@ -36,12 +40,21 @@ fun WatchedList(
                         modifier = Modifier
                             .fillMaxWidth()
                             .padding(vertical = 16.dp, horizontal = 8.dp),
+                        onOrderChange = {
+                            onOrderChange(it)
+                        },
+                        order = order
                     )
                 }
                 Spacer(modifier = Modifier.height(5.dp))
             }
             items(movies) { movie ->
-                WatchedItem(movie = movie)
+                WatchedItem(
+                    movie = movie,
+                    onMovieClick = { id ->
+                        onMovieClick(id)
+                    }
+                )
             }
         }
     } else {

@@ -10,7 +10,7 @@ fun Long.toTime(): String {
     return format.format(date)
 }
 
-fun Long.secondsToMinutes(): String {
+fun Long.secondsToMinutes(): Long {
     val minutesDivisor = 60
-    return (this / minutesDivisor).toString()
+    return (this / minutesDivisor)
 }

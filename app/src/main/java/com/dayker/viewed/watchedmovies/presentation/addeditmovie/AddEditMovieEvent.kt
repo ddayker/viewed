@@ -20,5 +20,8 @@ sealed class AddEditMovieEvent {
     data class RemoveDirector(val index: Int) : AddEditMovieEvent()
     data class RemoveWriter(val index: Int) : AddEditMovieEvent()
     data class RemoveStar(val index: Int) : AddEditMovieEvent()
-    data class ChangeImageURL(val imageUrl: String) : AddEditMovieEvent()
+    data class SaveUploadedImage(val filePath: String) : AddEditMovieEvent()
+    object SaveMovie : AddEditMovieEvent()
+    object DeleteMovie : AddEditMovieEvent()
+    object ReturnBack : AddEditMovieEvent()
 }

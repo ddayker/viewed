@@ -1,5 +1,6 @@
 package com.dayker.viewed.watchedmovies.presentation.addeditmovie.components.tabs
 
+import android.annotation.SuppressLint
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
@@ -19,6 +20,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import coil.ImageLoader.*
 import com.dayker.viewed.R
 import com.dayker.viewed.watchedmovies.presentation.addeditmovie.AddEditMovieEvent
 import com.dayker.viewed.watchedmovies.presentation.addeditmovie.AddEditMovieViewModel
@@ -28,21 +30,25 @@ import com.google.accompanist.adaptive.TwoPane
 import com.google.accompanist.adaptive.VerticalTwoPaneStrategy
 import org.koin.androidx.compose.getViewModel
 
+@SuppressLint("Recycle")
 @Composable
 fun ImageTab(
     modifier: Modifier = Modifier,
     windowSize: WindowSizeClass,
     viewModel: AddEditMovieViewModel = getViewModel()
 ) {
-    val imageUri = viewModel.movieState.value.imageURL
     val photoPickerLauncher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.PickVisualMedia(),
-        onResult = { uri -> viewModel.onEvent(AddEditMovieEvent.ChangeImageURL(uri.toString())) }
+        onResult = { uri ->
+            if (uri == null) return@rememberLauncherForActivityResult
+            viewModel.onEvent(AddEditMovieEvent.SaveUploadedImage(filePath = uri.toString()))
+        }
     )
+
     TwoPane(
         modifier = modifier,
         first = {
-            MovieImage(imageUri = imageUri)
+            MovieImage(imageUri = viewModel.movieState.value.imageURL)
         },
         second = {
             Box(

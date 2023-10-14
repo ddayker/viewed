@@ -62,8 +62,8 @@ fun MovieTab(
     TimeDurationDialog(
         visible = uiState.showDurationDialog,
         selectedTimeInSeconds = movieState.duration,
-        onPositiveClick = { duration ->
-            viewModel.onEvent(AddEditMovieEvent.ChangeDuration(duration))
+        onPositiveClick = { durationInSeconds ->
+            viewModel.onEvent(AddEditMovieEvent.ChangeDuration(durationInSeconds.secondsToMinutes()))
         },
         onCloseRequest = {
             viewModel.onEvent(AddEditMovieEvent.ChangeDurationDialogVisibility)
@@ -126,7 +126,7 @@ fun MovieTab(
             )
             ReadOnlyTextField(
                 text = if (movieState.duration != 0L) {
-                    movieState.duration.secondsToMinutes() + stringResource(id = R.string._min)
+                    movieState.duration.toString() + stringResource(id = R.string._min)
                 } else ""
             )
             Spacer(modifier = Modifier.height(40.dp))

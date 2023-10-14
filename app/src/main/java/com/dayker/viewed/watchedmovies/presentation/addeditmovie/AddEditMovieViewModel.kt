@@ -2,15 +2,54 @@ package com.dayker.viewed.watchedmovies.presentation.addeditmovie
 
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.dayker.viewed.watchedmovies.domain.repository.ImageCachingRepository
+import com.dayker.viewed.watchedmovies.domain.usecase.AddWatchedMovieUseCase
+import com.dayker.viewed.watchedmovies.domain.usecase.DeleteWatchedMovieUseCase
+import com.dayker.viewed.watchedmovies.domain.usecase.GetWatchedMovieUseCase
+import com.dayker.viewed.watchedmovies.presentation.addeditmovie.mapper.toMovie
+import com.dayker.viewed.watchedmovies.presentation.addeditmovie.mapper.toMovieState
+import com.dayker.viewed.watchedmovies.presentation.navigation.WatchedNavGraphConstants
+import com.dayker.viewed.watchedmovies.presentation.navigation.WatchedNavGraphConstants.MOVIE_ID_KEY
+import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.asSharedFlow
+import kotlinx.coroutines.launch
 
-class AddEditMovieViewModel() : ViewModel() {
+class AddEditMovieViewModel constructor(
+    private val addMovie: AddWatchedMovieUseCase,
+    private val deleteMovie: DeleteWatchedMovieUseCase,
+    private val getMovie: GetWatchedMovieUseCase,
+    private val imageCachingRepository: ImageCachingRepository,
+    savedStateHandle: SavedStateHandle
+) : ViewModel() {
 
     private val _uiState = mutableStateOf(AddEditUIState())
     val uiState: State<AddEditUIState> = _uiState
 
     private val _movieState = mutableStateOf(MovieState())
     val movieState: State<MovieState> = _movieState
+
+    private val _eventFlow = MutableSharedFlow<AddEditUiEvent>()
+    val eventFlow = _eventFlow.asSharedFlow()
+
+    private var movieId: Long? = null
+
+    init {
+        savedStateHandle.get<Int>(MOVIE_ID_KEY)?.let { id ->
+            if (id != WatchedNavGraphConstants.EMPTY_ID) {
+                _uiState.value = uiState.value.copy(isEditing = true)
+                viewModelScope.launch {
+                    getMovie(id)?.also { movie ->
+                        movieId = movie.id
+                        _movieState.value = movie.toMovieState()
+                        println(movie.toMovieState())
+                    }
+                }
+            }
+        }
+    }
 
     fun onEvent(event: AddEditMovieEvent) {
         when (event) {
@@ -47,7 +86,8 @@ class AddEditMovieViewModel() : ViewModel() {
             }
 
             is AddEditMovieEvent.ChangeReleaseDate -> {
-                _movieState.value = movieState.value.copy(releaseDate = event.releaseDateInMillis)
+                _movieState.value =
+                    movieState.value.copy(releaseDate = event.releaseDateInMillis)
             }
 
             is AddEditMovieEvent.ChangeReview -> {
@@ -55,7 +95,8 @@ class AddEditMovieViewModel() : ViewModel() {
             }
 
             is AddEditMovieEvent.ChangeViewingDate -> {
-                _movieState.value = movieState.value.copy(viewingDate = event.viewingDateInMillis)
+                _movieState.value =
+                    movieState.value.copy(viewingDate = event.viewingDateInMillis)
             }
 
             is AddEditMovieEvent.ChangeRating -> {
@@ -105,8 +146,63 @@ class AddEditMovieViewModel() : ViewModel() {
                 _movieState.value = movieState.value.copy(writers = writers.toList())
             }
 
-            is AddEditMovieEvent.ChangeImageURL -> {
-                _movieState.value = movieState.value.copy(imageURL = event.imageUrl)
+
+            is AddEditMovieEvent.SaveUploadedImage -> {
+                val isImageAlreadyChanged = movieState.value.isImageChanged
+                if (isImageAlreadyChanged) {
+                    val previousImageName =
+                        movieState.value.imageURL?.substringAfterLast("/").toString()
+                    imageCachingRepository.deleteImage(previousImageName)
+                }
+                val imageCacheUri = imageCachingRepository.cacheImage(filePath = event.filePath)
+                _movieState.value =
+                    movieState.value.copy(imageURL = imageCacheUri, isImageChanged = true)
+            }
+
+            AddEditMovieEvent.DeleteMovie -> {
+                viewModelScope.launch {
+                    deleteMovie(movie = movieState.value.toMovie(id = movieId))
+                    val isImageChanged = movieState.value.isImageChanged
+                    if (isImageChanged) {
+                        val unsavedImageName =
+                            movieState.value.imageURL?.substringAfterLast("/").toString()
+                        imageCachingRepository.deleteImage(unsavedImageName)
+                    }
+                    val fileName = "movie" + movieId.toString() + ".jpg"
+                    imageCachingRepository.deleteImage(fileName)
+                    _eventFlow.emit(AddEditUiEvent.DeleteMovie)
+                }
+            }
+
+            AddEditMovieEvent.SaveMovie -> {
+                viewModelScope.launch {
+                    if (movieId == null) {
+                        val newMovie = movieState.value.toMovie(id = movieId)
+                        movieId = addMovie(newMovie)
+                    }
+                    val fileName = "movie" + movieId.toString() + ".jpg"
+                    val movieImageCacheFileUri =
+                        imageCachingRepository.changeSessionUriCacheNameToPermanent(
+                            sessionImageUri = movieState.value.imageURL.toString(),
+                            permanentFileName = fileName
+                        )
+                    _movieState.value = movieState.value.copy(imageURL = movieImageCacheFileUri)
+                    val movie = movieState.value.toMovie(id = movieId)
+                    addMovie(movie)
+                    _eventFlow.emit(AddEditUiEvent.SaveMovie)
+                }
+            }
+
+            AddEditMovieEvent.ReturnBack -> {
+                viewModelScope.launch {
+                    val isImageChanged = movieState.value.isImageChanged
+                    if (isImageChanged) {
+                        val unsavedImageName =
+                            movieState.value.imageURL?.substringAfterLast("/").toString()
+                        imageCachingRepository.deleteImage(unsavedImageName)
+                    }
+                    _eventFlow.emit(AddEditUiEvent.DeleteMovie)
+                }
             }
         }
     }

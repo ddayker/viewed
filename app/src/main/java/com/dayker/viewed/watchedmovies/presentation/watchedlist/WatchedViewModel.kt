@@ -35,7 +35,12 @@ class WatchedViewModel(
     fun onEvent(event: WatchedScreenEvent) {
         when (event) {
             is WatchedScreenEvent.Order -> {
-
+                if (state.value.moviesOrder::class == event.moviesOrder::class &&
+                    state.value.moviesOrder.orderType == event.moviesOrder.orderType
+                ) {
+                    return
+                }
+                getMovies(event.moviesOrder)
             }
 
             WatchedScreenEvent.HideFab -> {

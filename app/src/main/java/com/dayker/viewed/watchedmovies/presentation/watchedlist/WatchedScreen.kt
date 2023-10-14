@@ -28,6 +28,7 @@ import androidx.compose.ui.input.nestedscroll.NestedScrollConnection
 import androidx.compose.ui.input.nestedscroll.NestedScrollSource
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.navigation.NavController
+import com.dayker.viewed.watchedmovies.presentation.navigation.WatchedNavGraphConstants.EMPTY_ID
 import com.dayker.viewed.watchedmovies.presentation.navigation.WatchedScreen
 import com.dayker.viewed.watchedmovies.presentation.watchedlist.components.WatchedList
 import com.dayker.viewed.watchedmovies.presentation.watchedlist.components.WatchedTopBar
@@ -40,7 +41,6 @@ fun WatchedListScreen(
     navController: NavController,
     viewModel: WatchedViewModel = getViewModel()
 ) {
-
     val state = viewModel.state.value
     val scrollBehavior = TopAppBarDefaults.exitUntilCollapsedScrollBehavior()
     val nestedScrollConnection = remember {
@@ -82,7 +82,9 @@ fun WatchedListScreen(
             ) {
                 LargeFloatingActionButton(
                     onClick = {
-                        navController.navigate(WatchedScreen.AddEditMovieScreen.route)
+                        val routeWithParams =
+                            "${WatchedScreen.AddEditMovieScreen.route}/${EMPTY_ID}"
+                        navController.navigate(routeWithParams)
                     },
                     containerColor = MaterialTheme.colorScheme.onTertiaryContainer
                 ) {
@@ -103,7 +105,16 @@ fun WatchedListScreen(
             WatchedList(
                 modifier = Modifier.nestedScroll(nestedScrollConnection),
                 isOrderSectionVisible = state.isOrderSelectionVisible,
-                movies = state.movies
+                movies = state.movies,
+                onMovieClick = { id ->
+                    val routeWithParams = "${WatchedScreen.AddEditMovieScreen.route}/${id}"
+                    navController.navigate(routeWithParams)
+
+                },
+                order = state.moviesOrder,
+                onOrderChange = { order ->
+                    viewModel.onEvent(WatchedScreenEvent.Order(order))
+                }
             )
         }
     }

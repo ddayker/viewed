@@ -8,8 +8,10 @@ data class MovieState(
     val review: String = "",
     val viewingDate: Long? = null,
     val imageURL: String? = null,
+    val isImageChanged: Boolean = false,
     val genres: List<String> = listOf(),
     val directors: List<String> = listOf(),
     val writers: List<String> = listOf(),
-    val stars: List<String> = listOf(),
+    val stars: List<String> = listOf()
 )
+

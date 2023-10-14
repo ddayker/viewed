@@ -1,5 +1,6 @@
 package com.dayker.viewed.watchedmovies.presentation.watchedlist.components
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -25,38 +26,37 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.dayker.viewed.R
+import com.dayker.viewed.app.core.utils.toTime
 import com.dayker.viewed.watchedmovies.domain.model.Movie
-import com.dayker.viewed.watchedmovies.presentation.components.DefaultMovieImage
+import com.dayker.viewed.watchedmovies.presentation.components.MovieImage
 
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
 fun WatchedItem(
     modifier: Modifier = Modifier,
-    movie: Movie
+    movie: Movie,
+    onMovieClick: (Long) -> Unit
 ) {
     Box(
         modifier = modifier
             .fillMaxWidth()
             .height(210.dp)
+            .clickable(onClick = {
+                movie.id?.let { onMovieClick(it) }
+            })
     ) {
         Row {
             Column(modifier.fillMaxHeight(), verticalArrangement = Arrangement.Center) {
-                if (movie.imageURL.isNullOrEmpty()) {
-                    DefaultMovieImage(
-                        modifier = Modifier
-                            .padding(10.dp)
-                            .height(180.dp)
-                            .width(120.dp)
-                    )
-                } else {
-                    // TODO: load image from URL
-                    DefaultMovieImage()
-                }
+                MovieImage(
+                    imageUri = movie.imageURL,
+                    modifier = Modifier
+                        .width(160.dp)
+                )
             }
             Column(
                 modifier = Modifier
                     .weight(1f)
-                    .padding(start = 10.dp, end = 15.dp, top = 15.dp, bottom = 20.dp)
+                    .padding(start = 10.dp, end = 15.dp, top = 20.dp, bottom = 20.dp)
             ) {
                 Text(text = movie.title, style = MaterialTheme.typography.bodyMedium)
                 FlowRow(modifier = Modifier.padding(top = 10.dp)) {
@@ -98,11 +98,13 @@ fun WatchedItem(
                         )
                     }
                 }
-                Text(
-                    text = movie.viewingDate,
-                    style = MaterialTheme.typography.titleSmall,
-                    modifier = Modifier.padding(top = 10.dp)
-                )
+                movie.viewingDate?.let {
+                    Text(
+                        text = it.toTime(),
+                        style = MaterialTheme.typography.titleSmall,
+                        modifier = Modifier.padding(top = 10.dp)
+                    )
+                }
                 Text(
                     text = movie.review,
                     style = MaterialTheme.typography.labelSmall,

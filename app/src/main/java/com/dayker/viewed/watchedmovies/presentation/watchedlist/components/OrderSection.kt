@@ -13,13 +13,15 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.dayker.viewed.R
+import com.dayker.viewed.watchedmovies.domain.util.MoviesOrder
+import com.dayker.viewed.watchedmovies.domain.util.OrderType
 
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
 fun OrderSection(
     modifier: Modifier = Modifier,
-//    order: MoviesOrder = MoviesOrder.Viewing(OrderType.Descending),
-//    onOrderChange: (MoviesOrder) -> Unit
+    order: MoviesOrder = MoviesOrder.Rating(OrderType.Descending),
+    onOrderChange: (MoviesOrder) -> Unit
 ) {
     Column(
         modifier = modifier
@@ -29,20 +31,32 @@ fun OrderSection(
         ) {
             DefaultRadioButton(
                 text = stringResource(R.string.rating),
-                selected = true,
-                onClick = {},
+                selected = order is MoviesOrder.Rating,
+                onClick = {
+                    onOrderChange(
+                        MoviesOrder.Rating(order.orderType)
+                    )
+                },
             )
             Spacer(modifier = Modifier.width(8.dp))
             DefaultRadioButton(
                 text = stringResource(R.string.viewing_date),
-                selected = false,
-                onClick = {},
+                selected = order is MoviesOrder.Viewing,
+                onClick = {
+                    onOrderChange(
+                        MoviesOrder.Viewing(order.orderType)
+                    )
+                },
             )
             Spacer(modifier = Modifier.width(8.dp))
             DefaultRadioButton(
                 text = stringResource(R.string.release_date),
-                selected = false,
-                onClick = {},
+                selected = order is MoviesOrder.Release,
+                onClick = {
+                    onOrderChange(
+                        MoviesOrder.Release(order.orderType)
+                    )
+                },
             )
             Spacer(modifier = Modifier.width(8.dp))
         }
@@ -51,14 +65,14 @@ fun OrderSection(
         FlowRow(modifier = Modifier.fillMaxWidth()) {
             DefaultRadioButton(
                 text = stringResource(R.string.ascending),
-                selected = true,
-                onClick = {},
+                selected = order.orderType is OrderType.Ascending,
+                onClick = { onOrderChange(order.copy(OrderType.Ascending)) }
             )
             Spacer(modifier = Modifier.width(8.dp))
             DefaultRadioButton(
                 text = stringResource(R.string.descending),
-                selected = false,
-                onClick = {},
+                selected = order.orderType is OrderType.Descending,
+                onClick = { onOrderChange(order.copy(OrderType.Descending)) }
             )
         }
     }

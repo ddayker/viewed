@@ -93,6 +93,7 @@ duration = { group = "com.maxkeppeler.sheets-compose-dialogs", name = "duration"
 input = { group = "com.maxkeppeler.sheets-compose-dialogs", name = "input", version.ref = "input" }
 list = { group = "com.maxkeppeler.sheets-compose-dialogs", name = "list", version.ref = "list" }
 state = { group = "com.maxkeppeler.sheets-compose-dialogs", name = "state", version.ref = "state" }
+androidx-room-ktx = { group = "androidx.room", name = "room-ktx", version.ref = "room" }
 
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }

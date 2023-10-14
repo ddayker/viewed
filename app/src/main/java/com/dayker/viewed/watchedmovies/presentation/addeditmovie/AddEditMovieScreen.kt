@@ -1,5 +1,8 @@
 package com.dayker.viewed.watchedmovies.presentation.addeditmovie
 
+import androidx.activity.OnBackPressedCallback
+import androidx.activity.OnBackPressedDispatcher
+import androidx.activity.compose.LocalOnBackPressedDispatcherOwner
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.ExtendedFloatingActionButton
@@ -10,6 +13,11 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.windowsizeclass.WindowSizeClass
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -23,6 +31,7 @@ import com.dayker.viewed.watchedmovies.presentation.addeditmovie.components.tabs
 import com.dayker.viewed.watchedmovies.presentation.addeditmovie.components.tabs.ImageTab
 import com.dayker.viewed.watchedmovies.presentation.addeditmovie.components.tabs.MovieTab
 import com.dayker.viewed.watchedmovies.presentation.addeditmovie.components.tabs.ReviewTab
+import kotlinx.coroutines.flow.collectLatest
 import org.koin.androidx.compose.getViewModel
 
 @Composable
@@ -32,19 +41,46 @@ fun AddEditMovieScreen(
     navController: NavController,
     viewModel: AddEditMovieViewModel = getViewModel()
 ) {
+    val onBack = { viewModel.onEvent(AddEditMovieEvent.ReturnBack) }
+    BackPressHandler(onBackPressed = onBack)
+    LaunchedEffect(key1 = true) {
+        viewModel.eventFlow.collectLatest { event ->
+            when (event) {
+                is AddEditUiEvent.SaveMovie -> {
+                    navController.navigateUp()
+                }
+
+                AddEditUiEvent.DeleteMovie -> {
+                    navController.navigateUp()
+                }
+
+                AddEditUiEvent.ReturnBack -> {
+                    navController.navigateUp()
+                }
+            }
+        }
+    }
     Scaffold(
         modifier = modifier,
         topBar = {
-            AddEditTopBar {
-                navController.navigateUp()
-            }
+            AddEditTopBar(
+                title = if (viewModel.uiState.value.isEditing) stringResource(R.string.editing)
+                else stringResource(R.string.adding),
+                showDeleteButton = viewModel.uiState.value.isEditing,
+                deleteButtonAction = {
+                    viewModel.onEvent(AddEditMovieEvent.DeleteMovie)
+                },
+                backButtonAction = {
+                    viewModel.onEvent(AddEditMovieEvent.ReturnBack)
+                }
+            )
         },
         floatingActionButtonPosition = FabPosition.End,
         floatingActionButton = {
             ExtendedFloatingActionButton(
                 modifier = Modifier.padding(bottom = 25.dp),
                 onClick = {
-                    navController.navigateUp()
+                    viewModel.onEvent(AddEditMovieEvent.SaveMovie)
                 },
                 containerColor = MaterialTheme.colorScheme.onTertiaryContainer,
                 text = {
@@ -75,7 +111,29 @@ fun AddEditMovieScreen(
                 AddEditRow.Review.ordinal -> ReviewTab()
                 AddEditRow.Details.ordinal -> DetailsTab()
             }
+        }
+    }
+}
 
+@Composable
+fun BackPressHandler(
+    backPressedDispatcher: OnBackPressedDispatcher? =
+        LocalOnBackPressedDispatcherOwner.current?.onBackPressedDispatcher,
+    onBackPressed: () -> Unit
+) {
+    val currentOnBackPressed by rememberUpdatedState(newValue = onBackPressed)
+    val backCallback = remember {
+        object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                currentOnBackPressed()
+            }
+        }
+    }
+    DisposableEffect(key1 = backPressedDispatcher) {
+        backPressedDispatcher?.addCallback(backCallback)
+
+        onDispose {
+            backCallback.remove()
         }
     }
 }

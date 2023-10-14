@@ -54,7 +54,7 @@ fun DetailsTab(
     InputTextDialog(
         visible = uiState.showInputDialog,
         title = stringResource(R.string.write_the_name),
-        text = movieState.title,
+        text = "",
         onPositiveClick = { name ->
             when (inputDialogAction) {
                 InputAction.UpdateDirectors -> {
