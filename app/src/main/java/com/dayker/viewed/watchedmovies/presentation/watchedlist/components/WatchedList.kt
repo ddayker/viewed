@@ -30,24 +30,24 @@ fun WatchedList(
     onOrderChange: (MoviesOrder) -> Unit,
     order: MoviesOrder
 ) {
-    if (movies.isNotEmpty()) {
-        LazyColumn(modifier = modifier) {
-            item {
-                AnimatedVisibility(
-                    visible = isOrderSectionVisible,
-                ) {
-                    OrderSection(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(vertical = 16.dp, horizontal = 8.dp),
-                        onOrderChange = {
-                            onOrderChange(it)
-                        },
-                        order = order
-                    )
-                }
-                Spacer(modifier = Modifier.height(5.dp))
+    LazyColumn(modifier = modifier) {
+        item {
+            AnimatedVisibility(
+                visible = isOrderSectionVisible,
+            ) {
+                OrderSection(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(vertical = 16.dp, horizontal = 8.dp),
+                    onOrderChange = {
+                        onOrderChange(it)
+                    },
+                    order = order
+                )
             }
+            Spacer(modifier = Modifier.height(5.dp))
+        }
+        if (movies.isNotEmpty()) {
             items(movies) { movie ->
                 WatchedItem(
                     movie = movie,
@@ -57,7 +57,8 @@ fun WatchedList(
                 )
             }
         }
-    } else {
+    }
+    if (movies.isEmpty()) {
         Box(
             modifier = modifier
                 .fillMaxSize()

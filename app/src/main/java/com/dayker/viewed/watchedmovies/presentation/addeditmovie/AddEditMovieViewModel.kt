@@ -5,6 +5,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.dayker.viewed.watchedmovies.data.repository.utils.CacheUtils.getIdImageFileName
 import com.dayker.viewed.watchedmovies.domain.repository.ImageCachingRepository
 import com.dayker.viewed.watchedmovies.domain.usecase.AddWatchedMovieUseCase
 import com.dayker.viewed.watchedmovies.domain.usecase.DeleteWatchedMovieUseCase
@@ -48,6 +49,12 @@ class AddEditMovieViewModel constructor(
                     }
                 }
             }
+        }
+    }
+
+    private fun isPossibleToSave(): Boolean {
+        return with(movieState.value) {
+            title.trim().isNotEmpty() && duration != 0L && viewingDate != null
         }
     }
 
@@ -168,7 +175,7 @@ class AddEditMovieViewModel constructor(
                             movieState.value.imageURL?.substringAfterLast("/").toString()
                         imageCachingRepository.deleteImage(unsavedImageName)
                     }
-                    val fileName = "movie" + movieId.toString() + ".jpg"
+                    val fileName = getIdImageFileName(movieId)
                     imageCachingRepository.deleteImage(fileName)
                     _eventFlow.emit(AddEditUiEvent.DeleteMovie)
                 }
@@ -176,20 +183,24 @@ class AddEditMovieViewModel constructor(
 
             AddEditMovieEvent.SaveMovie -> {
                 viewModelScope.launch {
-                    if (movieId == null) {
-                        val newMovie = movieState.value.toMovie(id = movieId)
-                        movieId = addMovie(newMovie)
+                    if (isPossibleToSave()) {
+                        if (movieId == null) {
+                            val newMovie = movieState.value.toMovie(id = movieId)
+                            movieId = addMovie(newMovie)
+                        }
+                        val fileName = getIdImageFileName(movieId)
+                        val movieImageCacheFileUri =
+                            imageCachingRepository.changeSessionUriCacheNameToPermanent(
+                                sessionImageUri = movieState.value.imageURL.toString(),
+                                permanentFileName = fileName
+                            )
+                        _movieState.value = movieState.value.copy(imageURL = movieImageCacheFileUri)
+                        val movie = movieState.value.toMovie(id = movieId)
+                        addMovie(movie)
+                        _eventFlow.emit(AddEditUiEvent.SaveMovie(isPossibleToSave = true))
+                    } else {
+                        _eventFlow.emit(AddEditUiEvent.SaveMovie(isPossibleToSave = false))
                     }
-                    val fileName = "movie" + movieId.toString() + ".jpg"
-                    val movieImageCacheFileUri =
-                        imageCachingRepository.changeSessionUriCacheNameToPermanent(
-                            sessionImageUri = movieState.value.imageURL.toString(),
-                            permanentFileName = fileName
-                        )
-                    _movieState.value = movieState.value.copy(imageURL = movieImageCacheFileUri)
-                    val movie = movieState.value.toMovie(id = movieId)
-                    addMovie(movie)
-                    _eventFlow.emit(AddEditUiEvent.SaveMovie)
                 }
             }
 
@@ -201,8 +212,18 @@ class AddEditMovieViewModel constructor(
                             movieState.value.imageURL?.substringAfterLast("/").toString()
                         imageCachingRepository.deleteImage(unsavedImageName)
                     }
-                    _eventFlow.emit(AddEditUiEvent.DeleteMovie)
+                    _eventFlow.emit(AddEditUiEvent.ReturnBack)
                 }
+            }
+
+            AddEditMovieEvent.ChangeSavingErrorDialogVisibility -> {
+                _uiState.value =
+                    uiState.value.copy(showSavingErrorDialog = !uiState.value.showSavingErrorDialog)
+            }
+
+            AddEditMovieEvent.ChangeDeleteConfirmationDialogVisibility -> {
+                _uiState.value =
+                    uiState.value.copy(showDeleteConfirmationDialog = !uiState.value.showDeleteConfirmationDialog)
             }
         }
     }

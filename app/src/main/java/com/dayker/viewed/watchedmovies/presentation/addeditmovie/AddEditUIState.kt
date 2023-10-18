@@ -7,4 +7,6 @@ data class AddEditUIState(
     val showDurationDialog: Boolean = false,
     val showGenresListDialog: Boolean = false,
     val showInputDialog: Boolean = false,
+    val showSavingErrorDialog: Boolean = false,
+    val showDeleteConfirmationDialog: Boolean = false
 )

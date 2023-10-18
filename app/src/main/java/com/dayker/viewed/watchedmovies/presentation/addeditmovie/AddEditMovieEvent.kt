@@ -21,6 +21,8 @@ sealed class AddEditMovieEvent {
     data class RemoveWriter(val index: Int) : AddEditMovieEvent()
     data class RemoveStar(val index: Int) : AddEditMovieEvent()
     data class SaveUploadedImage(val filePath: String) : AddEditMovieEvent()
+    object ChangeSavingErrorDialogVisibility : AddEditMovieEvent()
+    object ChangeDeleteConfirmationDialogVisibility : AddEditMovieEvent()
     object SaveMovie : AddEditMovieEvent()
     object DeleteMovie : AddEditMovieEvent()
     object ReturnBack : AddEditMovieEvent()

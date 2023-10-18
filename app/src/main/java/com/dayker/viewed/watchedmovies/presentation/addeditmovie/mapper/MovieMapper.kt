@@ -21,11 +21,11 @@ fun Movie.toMovieState() = MovieState(
 fun MovieState.toMovie(id: Long? = null) = Movie(
     id = id,
     title = this.title,
-    releaseDate = this.releaseDate ?: 0L,
+    releaseDate = this.releaseDate,
     duration = this.duration,
     rating = this.rating,
     review = this.review,
-    viewingDate = this.viewingDate ?: 0L,
+    viewingDate = this.viewingDate,
     imageURL = this.imageURL ?: "",
     genres = this.genres.toValueString(),
     directors = this.directors.toValueString(),

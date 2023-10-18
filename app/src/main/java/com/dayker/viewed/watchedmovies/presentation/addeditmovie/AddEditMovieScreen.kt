@@ -24,6 +24,8 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.dayker.viewed.R
+import com.dayker.viewed.watchedmovies.presentation.addeditmovie.components.dialogs.DeleteConfirmationDialog
+import com.dayker.viewed.watchedmovies.presentation.addeditmovie.components.dialogs.SavingErrorDialog
 import com.dayker.viewed.watchedmovies.presentation.addeditmovie.components.elements.AddEditMovieTabRow
 import com.dayker.viewed.watchedmovies.presentation.addeditmovie.components.elements.AddEditRow
 import com.dayker.viewed.watchedmovies.presentation.addeditmovie.components.elements.AddEditTopBar
@@ -31,7 +33,6 @@ import com.dayker.viewed.watchedmovies.presentation.addeditmovie.components.tabs
 import com.dayker.viewed.watchedmovies.presentation.addeditmovie.components.tabs.ImageTab
 import com.dayker.viewed.watchedmovies.presentation.addeditmovie.components.tabs.MovieTab
 import com.dayker.viewed.watchedmovies.presentation.addeditmovie.components.tabs.ReviewTab
-import kotlinx.coroutines.flow.collectLatest
 import org.koin.androidx.compose.getViewModel
 
 @Composable
@@ -43,11 +44,31 @@ fun AddEditMovieScreen(
 ) {
     val onBack = { viewModel.onEvent(AddEditMovieEvent.ReturnBack) }
     BackPressHandler(onBackPressed = onBack)
+
+    SavingErrorDialog(
+        visible = viewModel.uiState.value.showSavingErrorDialog,
+        onDismissRequest = {
+            viewModel.onEvent(AddEditMovieEvent.ChangeSavingErrorDialogVisibility)
+        }
+    )
+    DeleteConfirmationDialog(
+        visible = viewModel.uiState.value.showDeleteConfirmationDialog,
+        onDismissRequest = {
+            viewModel.onEvent(AddEditMovieEvent.ChangeDeleteConfirmationDialogVisibility)
+        },
+        onConfirmClick = {
+            viewModel.onEvent(AddEditMovieEvent.DeleteMovie)
+        }
+    )
     LaunchedEffect(key1 = true) {
-        viewModel.eventFlow.collectLatest { event ->
+        viewModel.eventFlow.collect() { event ->
             when (event) {
                 is AddEditUiEvent.SaveMovie -> {
-                    navController.navigateUp()
+                    if (event.isPossibleToSave) {
+                        navController.navigateUp()
+                    } else {
+                        viewModel.onEvent(AddEditMovieEvent.ChangeSavingErrorDialogVisibility)
+                    }
                 }
 
                 AddEditUiEvent.DeleteMovie -> {
@@ -68,7 +89,7 @@ fun AddEditMovieScreen(
                 else stringResource(R.string.adding),
                 showDeleteButton = viewModel.uiState.value.isEditing,
                 deleteButtonAction = {
-                    viewModel.onEvent(AddEditMovieEvent.DeleteMovie)
+                    viewModel.onEvent(AddEditMovieEvent.ChangeDeleteConfirmationDialogVisibility)
                 },
                 backButtonAction = {
                     viewModel.onEvent(AddEditMovieEvent.ReturnBack)
