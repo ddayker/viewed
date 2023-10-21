@@ -5,6 +5,8 @@ import com.dayker.viewed.watchedmovies.domain.util.MoviesOrder
 import com.dayker.viewed.watchedmovies.domain.util.OrderType
 
 data class WatchedState(
+    val isLoading: Boolean = false,
+    val isEmpty: Boolean = false,
     val movies: List<Movie> = emptyList(),
     val moviesOrder: MoviesOrder = MoviesOrder.Rating(OrderType.Descending),
     val isFABVisible: Boolean = true,

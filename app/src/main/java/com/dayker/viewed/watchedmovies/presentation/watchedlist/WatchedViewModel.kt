@@ -4,6 +4,7 @@ import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.dayker.viewed.app.core.Resource
 import com.dayker.viewed.watchedmovies.domain.usecase.GetWatchedMoviesUseCase
 import com.dayker.viewed.watchedmovies.domain.util.MoviesOrder
 import com.dayker.viewed.watchedmovies.domain.util.OrderType
@@ -26,8 +27,36 @@ class WatchedViewModel(
 
     private fun getMovies(order: MoviesOrder) {
         getMoviesJob?.cancel()
-        getMoviesJob = getWatchedMoviesUseCase(order).onEach { movies ->
-            _state.value = state.value.copy(movies = movies, moviesOrder = order)
+        getMoviesJob = getWatchedMoviesUseCase(order).onEach { result ->
+            when (result) {
+                is Resource.Success -> {
+                    if (result.data != null) {
+                        if (result.data.isNotEmpty()) {
+                            _state.value = state.value.copy(
+                                movies = result.data,
+                                moviesOrder = order,
+                                isEmpty = false,
+                                isLoading = false
+                            )
+                        } else {
+                            _state.value = state.value.copy(
+                                movies = result.data,
+                                moviesOrder = order,
+                                isEmpty = true,
+                                isLoading = false
+                            )
+                        }
+                    }
+                }
+
+                is Resource.Loading -> {
+                    _state.value = state.value.copy(isLoading = true, isEmpty = false)
+                }
+
+                is Resource.Error -> {
+                    println(result.message)
+                }
+            }
         }
             .launchIn(viewModelScope)
     }
