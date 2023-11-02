@@ -38,7 +38,7 @@ class AddEditMovieViewModel constructor(
     private var movieId: Long? = null
 
     init {
-        savedStateHandle.get<Int>(MOVIE_ID_KEY)?.let { id ->
+        savedStateHandle.get<Long>(MOVIE_ID_KEY)?.let { id ->
             if (id != WatchedNavGraphConstants.EMPTY_ID) {
                 _uiState.value = uiState.value.copy(isEditing = true)
                 viewModelScope.launch {

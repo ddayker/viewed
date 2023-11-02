@@ -1,6 +1,6 @@
 package com.dayker.viewed.watchedmovies.domain.usecase
 
-import com.dayker.viewed.app.core.Resource
+import com.dayker.viewed.common.Resource
 import com.dayker.viewed.watchedmovies.domain.model.Movie
 import com.dayker.viewed.watchedmovies.domain.repository.WatchedMoviesRepository
 import com.dayker.viewed.watchedmovies.domain.util.MoviesOrder

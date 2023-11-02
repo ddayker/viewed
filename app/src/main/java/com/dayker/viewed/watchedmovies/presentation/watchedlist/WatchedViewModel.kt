@@ -4,7 +4,7 @@ import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.dayker.viewed.app.core.Resource
+import com.dayker.viewed.common.Resource
 import com.dayker.viewed.watchedmovies.domain.usecase.GetWatchedMoviesUseCase
 import com.dayker.viewed.watchedmovies.domain.util.MoviesOrder
 import com.dayker.viewed.watchedmovies.domain.util.OrderType

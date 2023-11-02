@@ -83,4 +83,10 @@
     <string name="saved">Saved</string>
     <string name="yes">Yes</string>
     <string name="are_you_sure_you_want_to_delete_this_movie">Are you sure you want to delete this movie?</string>
+    <string name="search">Search</string>
+    <string name="something_went_wrong">Something went wrong...\n</string>
+    <string name="heck_your_internet_connection_or_add_a_movie_manually">Check your internet connection or add a movie manually</string>
+    <string name="find_a_movie_by_name">Find a movie by name</string>
+    <string name="no_movies_with_this_name_were_found">No movies with this name were found...</string>
+    <string name="the_query_is_too_short">Find a movie by name (your query is too short)</string>
 </resources>

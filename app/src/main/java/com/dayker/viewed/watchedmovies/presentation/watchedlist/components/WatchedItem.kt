@@ -26,9 +26,9 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.dayker.viewed.R
-import com.dayker.viewed.app.core.utils.toTime
+import com.dayker.viewed.common.presentation.components.MovieImage
+import com.dayker.viewed.common.utils.toTime
 import com.dayker.viewed.watchedmovies.domain.model.Movie
-import com.dayker.viewed.watchedmovies.presentation.components.MovieImage
 
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
@@ -51,6 +51,7 @@ fun WatchedItem(
                     imageUri = movie.imageURL,
                     modifier = Modifier
                         .width(160.dp)
+                        .padding(all = 20.dp)
                 )
             }
             Column(

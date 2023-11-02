@@ -44,14 +44,14 @@ fun ReadOnlyTextField(
     TextField(
         modifier = Modifier.fillMaxWidth(),
         value = text,
+        enabled = false,
         readOnly = true,
         onValueChange = {},
         textStyle = textStyle.copy(brush = brush),
         colors = TextFieldDefaults.colors(
-            cursorColor = MaterialTheme.colorScheme.onTertiaryContainer,
             unfocusedContainerColor = MaterialTheme.colorScheme.background,
-            focusedContainerColor = MaterialTheme.colorScheme.background,
-            focusedIndicatorColor = MaterialTheme.colorScheme.onTertiaryContainer,
+            unfocusedIndicatorColor = MaterialTheme.colorScheme.onBackground,
+            disabledContainerColor = MaterialTheme.colorScheme.background,
         )
     )
 }

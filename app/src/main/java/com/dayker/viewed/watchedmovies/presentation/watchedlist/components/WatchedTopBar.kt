@@ -20,7 +20,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.dayker.viewed.R
-import com.dayker.viewed.app.core.presentation.components.FlipIcon
+import com.dayker.viewed.common.presentation.components.FlipIcon
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

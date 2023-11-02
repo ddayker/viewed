@@ -12,7 +12,7 @@ class WatchedMoviesRepositoryImpl(
         return dao.getMovies()
     }
 
-    override suspend fun getMovieById(id: Int): Movie? {
+    override suspend fun getMovieById(id: Long): Movie? {
         return dao.getMovieById(id)
     }
 

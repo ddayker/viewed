@@ -7,9 +7,9 @@ import androidx.navigation.NavType
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import androidx.navigation.navigation
-import com.dayker.viewed.app.core.presentation.navigation.graphs.Graph
-import com.dayker.viewed.app.core.presentation.navigation.navanimations.scaleInAnimation
-import com.dayker.viewed.app.core.presentation.navigation.navanimations.scaleOutAnimation
+import com.dayker.viewed.common.presentation.navigation.graphs.Graph
+import com.dayker.viewed.common.presentation.navigation.navanimations.scaleInAnimation
+import com.dayker.viewed.common.presentation.navigation.navanimations.scaleOutAnimation
 import com.dayker.viewed.watchedmovies.presentation.addeditmovie.AddEditMovieScreen
 import com.dayker.viewed.watchedmovies.presentation.navigation.WatchedNavGraphConstants.EMPTY_ID
 import com.dayker.viewed.watchedmovies.presentation.navigation.WatchedNavGraphConstants.MOVIE_ID_KEY
@@ -46,7 +46,7 @@ fun NavGraphBuilder.watchedNavGraph(navController: NavHostController, windowSize
                 navArgument(
                     name = MOVIE_ID_KEY
                 ) {
-                    type = NavType.IntType
+                    type = NavType.LongType
                     defaultValue = EMPTY_ID
                 }
             ),
@@ -73,5 +73,5 @@ fun NavGraphBuilder.watchedNavGraph(navController: NavHostController, windowSize
 
 object WatchedNavGraphConstants {
     const val MOVIE_ID_KEY = "movie_id"
-    const val EMPTY_ID = -1
+    const val EMPTY_ID = -1L
 }

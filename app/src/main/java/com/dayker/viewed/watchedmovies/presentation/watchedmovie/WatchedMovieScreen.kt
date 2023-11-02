@@ -12,7 +12,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.navigation.NavController
 import androidx.window.layout.DisplayFeature
-import com.dayker.viewed.watchedmovies.presentation.components.MovieImage
+import com.dayker.viewed.common.presentation.components.MovieImage
 import com.google.accompanist.adaptive.HorizontalTwoPaneStrategy
 import com.google.accompanist.adaptive.TwoPane
 import com.google.accompanist.adaptive.VerticalTwoPaneStrategy

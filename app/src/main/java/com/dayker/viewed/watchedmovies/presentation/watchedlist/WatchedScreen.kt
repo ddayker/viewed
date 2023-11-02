@@ -13,7 +13,6 @@ import androidx.compose.foundation.layout.navigationBars
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
-import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FabPosition
 import androidx.compose.material3.Icon
@@ -36,6 +35,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.dayker.viewed.R
+import com.dayker.viewed.common.presentation.components.CircularLoading
 import com.dayker.viewed.watchedmovies.presentation.navigation.WatchedNavGraphConstants.EMPTY_ID
 import com.dayker.viewed.watchedmovies.presentation.navigation.WatchedScreen
 import com.dayker.viewed.watchedmovies.presentation.watchedlist.components.WatchedList
@@ -125,17 +125,11 @@ fun WatchedListScreen(
                 }
             )
             if (state.isLoading) {
-                Box(
-                    modifier = modifier
+                CircularLoading(
+                    modifier = Modifier
                         .fillMaxSize()
                         .padding(horizontal = 30.dp),
-                    contentAlignment = Alignment.Center
-                ) {
-                    CircularProgressIndicator(
-                        modifier = Modifier.align(Alignment.Center),
-                        color = MaterialTheme.colorScheme.onTertiaryContainer,
-                    )
-                }
+                )
             }
             if (state.isEmpty) {
                 Box(

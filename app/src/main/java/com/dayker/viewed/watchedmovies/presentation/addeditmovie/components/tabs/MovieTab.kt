@@ -16,8 +16,8 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.dayker.viewed.R
-import com.dayker.viewed.app.core.utils.secondsToMinutes
-import com.dayker.viewed.app.core.utils.toTime
+import com.dayker.viewed.common.utils.secondsToMinutes
+import com.dayker.viewed.common.utils.toTime
 import com.dayker.viewed.watchedmovies.presentation.addeditmovie.AddEditMovieEvent
 import com.dayker.viewed.watchedmovies.presentation.addeditmovie.AddEditMovieViewModel
 import com.dayker.viewed.watchedmovies.presentation.addeditmovie.components.dialogs.CalendarPickerDialog

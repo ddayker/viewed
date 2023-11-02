@@ -40,6 +40,8 @@ duration = "1.2.0"
 input = "1.2.0"
 list = "1.2.0"
 state = "1.2.0"
+logback-classic = "1.4.11"
+ktor = "2.3.5"
 
 [libraries]
 core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "core-ktx" }
@@ -94,6 +96,15 @@ input = { group = "com.maxkeppeler.sheets-compose-dialogs", name = "input", vers
 list = { group = "com.maxkeppeler.sheets-compose-dialogs", name = "list", version.ref = "list" }
 state = { group = "com.maxkeppeler.sheets-compose-dialogs", name = "state", version.ref = "state" }
 androidx-room-ktx = { group = "androidx.room", name = "room-ktx", version.ref = "room" }
+ktor-client-core = { group = "io.ktor", name = "ktor-client-core", version.ref = "ktor" }
+ktor-client-android = { group = "io.ktor", name = "ktor-client-android", version.ref = "ktor" }
+ktor-client-serialization = { group = "io.ktor", name = "ktor-client-serialization", version.ref = "ktor" }
+ktor-client-cio = { group = "io.ktor", name = "ktor-client-cio", version.ref = "ktor" }
+ktor-client-logging = { group = "io.ktor", name = "ktor-client-logging", version.ref = "ktor" }
+logback-classic = { group = "ch.qos.logback", name = "logback-classic", version.ref = "logback-classic" }
+ktor-server-content-negotiation = { group = "io.ktor", name = "ktor-server-content-negotiation", version.ref = "ktor" }
+ktor-serialization-kotlinx-json = { group = "io.ktor", name = "ktor-serialization-kotlinx-json", version.ref = "ktor" }
+ktor-client-content-negotiation = { group = "io.ktor", name = "ktor-client-content-negotiation", version.ref = "ktor" }
 
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }

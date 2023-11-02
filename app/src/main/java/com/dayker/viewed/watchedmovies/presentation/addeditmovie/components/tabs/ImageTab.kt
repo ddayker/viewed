@@ -22,9 +22,9 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import coil.ImageLoader.*
 import com.dayker.viewed.R
+import com.dayker.viewed.common.presentation.components.MovieImage
 import com.dayker.viewed.watchedmovies.presentation.addeditmovie.AddEditMovieEvent
 import com.dayker.viewed.watchedmovies.presentation.addeditmovie.AddEditMovieViewModel
-import com.dayker.viewed.watchedmovies.presentation.components.MovieImage
 import com.google.accompanist.adaptive.HorizontalTwoPaneStrategy
 import com.google.accompanist.adaptive.TwoPane
 import com.google.accompanist.adaptive.VerticalTwoPaneStrategy
@@ -48,7 +48,10 @@ fun ImageTab(
     TwoPane(
         modifier = modifier,
         first = {
-            MovieImage(imageUri = viewModel.movieState.value.imageURL)
+            MovieImage(
+                imageUri = viewModel.movieState.value.imageURL,
+                modifier = Modifier.padding(all = 20.dp)
+            )
         },
         second = {
             Box(
