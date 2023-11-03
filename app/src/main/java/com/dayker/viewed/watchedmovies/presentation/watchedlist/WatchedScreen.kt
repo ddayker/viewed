@@ -11,12 +11,8 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.ime
 import androidx.compose.foundation.layout.navigationBars
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Add
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FabPosition
-import androidx.compose.material3.Icon
-import androidx.compose.material3.LargeFloatingActionButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.ScaffoldDefaults
@@ -38,6 +34,7 @@ import com.dayker.viewed.R
 import com.dayker.viewed.common.presentation.components.CircularLoading
 import com.dayker.viewed.watchedmovies.presentation.navigation.WatchedNavGraphConstants.EMPTY_ID
 import com.dayker.viewed.watchedmovies.presentation.navigation.WatchedScreen
+import com.dayker.viewed.watchedmovies.presentation.watchedlist.components.AddingFAB
 import com.dayker.viewed.watchedmovies.presentation.watchedlist.components.WatchedList
 import com.dayker.viewed.watchedmovies.presentation.watchedlist.components.WatchedTopBar
 import org.koin.androidx.compose.getViewModel
@@ -55,11 +52,10 @@ fun WatchedListScreen(
         object : NestedScrollConnection {
             override fun onPreScroll(available: Offset, source: NestedScrollSource): Offset {
                 if (available.y < -1) {
-                    viewModel.onEvent(WatchedScreenEvent.HideFab)
+                    viewModel.onEvent(WatchedScreenEvent.HideFAB)
                 }
                 if (available.y > 1) {
                     viewModel.onEvent(WatchedScreenEvent.ShowFAB)
-
                 }
                 return Offset.Zero
             }
@@ -71,7 +67,7 @@ fun WatchedListScreen(
             .exclude(WindowInsets.navigationBars)
             .exclude(WindowInsets.ime),
         modifier = modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
-        floatingActionButtonPosition = FabPosition.Center,
+        floatingActionButtonPosition = FabPosition.End,
         topBar = {
             WatchedTopBar(
                 scrollBehavior = scrollBehavior,
@@ -88,20 +84,20 @@ fun WatchedListScreen(
                 enter = slideInVertically(initialOffsetY = { it * 2 }),
                 exit = slideOutVertically(targetOffsetY = { it * 2 }),
             ) {
-                LargeFloatingActionButton(
-                    onClick = {
+                AddingFAB(
+                    isExtended = state.isFABExtended,
+                    onFABClick = {
+                        viewModel.onEvent(WatchedScreenEvent.ExtendFAB)
+                    },
+                    onManuallyClick = {
                         val routeWithParams =
                             "${WatchedScreen.AddEditMovieScreen.route}/${EMPTY_ID}"
                         navController.navigate(routeWithParams)
                     },
-                    containerColor = MaterialTheme.colorScheme.onTertiaryContainer
-                ) {
-                    Icon(
-                        imageVector = Icons.Default.Add,
-                        contentDescription = null,
-                        tint = MaterialTheme.colorScheme.background,
-                    )
-                }
+                    onSearchClick = {
+                        navController.navigate(WatchedScreen.SearchScreen.route)
+                    },
+                )
             }
         }
     ) {

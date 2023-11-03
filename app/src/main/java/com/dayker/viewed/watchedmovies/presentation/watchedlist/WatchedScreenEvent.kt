@@ -6,6 +6,7 @@ sealed class WatchedScreenEvent {
     data class Order(val moviesOrder: MoviesOrder) : WatchedScreenEvent()
     object ToggleOrderSection : WatchedScreenEvent()
     object ShowFAB : WatchedScreenEvent()
-    object HideFab : WatchedScreenEvent()
+    object HideFAB : WatchedScreenEvent()
+    object ExtendFAB : WatchedScreenEvent()
 
 }

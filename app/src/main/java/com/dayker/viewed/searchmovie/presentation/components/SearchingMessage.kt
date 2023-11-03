@@ -16,7 +16,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import com.dayker.viewed.common.presentation.components.Animation
 
 @Composable
@@ -40,7 +39,7 @@ fun SearchingMessage(
             }
             Text(
                 text = text,
-                style = MaterialTheme.typography.bodySmall.copy(fontSize = 15.sp),
+                style = MaterialTheme.typography.displayMedium,
                 color = MaterialTheme.colorScheme.onBackground,
                 modifier = Modifier.padding(horizontal = 40.dp, vertical = 20.dp),
                 textAlign = TextAlign.Center

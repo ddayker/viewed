@@ -72,9 +72,10 @@ class WatchedViewModel(
                 getMovies(event.moviesOrder)
             }
 
-            WatchedScreenEvent.HideFab -> {
+            WatchedScreenEvent.HideFAB -> {
                 _state.value = state.value.copy(
-                    isFABVisible = false
+                    isFABVisible = false,
+                    isFABExtended = false
                 )
             }
 
@@ -87,6 +88,12 @@ class WatchedViewModel(
             WatchedScreenEvent.ToggleOrderSection -> {
                 _state.value = state.value.copy(
                     isOrderSelectionVisible = !state.value.isOrderSelectionVisible
+                )
+            }
+
+            WatchedScreenEvent.ExtendFAB -> {
+                _state.value = state.value.copy(
+                    isFABExtended = !state.value.isFABExtended
                 )
             }
         }

@@ -10,6 +10,7 @@ import androidx.navigation.navigation
 import com.dayker.viewed.common.presentation.navigation.graphs.Graph
 import com.dayker.viewed.common.presentation.navigation.navanimations.scaleInAnimation
 import com.dayker.viewed.common.presentation.navigation.navanimations.scaleOutAnimation
+import com.dayker.viewed.searchmovie.presentation.MovieSearchingScreen
 import com.dayker.viewed.watchedmovies.presentation.addeditmovie.AddEditMovieScreen
 import com.dayker.viewed.watchedmovies.presentation.navigation.WatchedNavGraphConstants.EMPTY_ID
 import com.dayker.viewed.watchedmovies.presentation.navigation.WatchedNavGraphConstants.MOVIE_ID_KEY
@@ -66,6 +67,26 @@ fun NavGraphBuilder.watchedNavGraph(navController: NavHostController, windowSize
             AddEditMovieScreen(
                 windowSize = windowSize,
                 navController = navController
+            )
+        }
+        composable(
+            route = WatchedScreen.SearchScreen.route,
+            enterTransition = {
+                null
+            },
+            popEnterTransition = {
+                null
+            },
+            exitTransition = {
+                null
+            },
+            popExitTransition = {
+                null
+            }
+        ) {
+            MovieSearchingScreen(
+                navController = navController,
+                windowSize = windowSize,
             )
         }
     }

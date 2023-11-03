@@ -10,6 +10,7 @@ data class WatchedState(
     val movies: List<Movie> = emptyList(),
     val moviesOrder: MoviesOrder = MoviesOrder.Rating(OrderType.Descending),
     val isFABVisible: Boolean = true,
+    val isFABExtended: Boolean = false,
     val isOrderSelectionVisible: Boolean = false,
     val isSynchronized: Boolean = true
 )

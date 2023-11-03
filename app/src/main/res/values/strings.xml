@@ -88,5 +88,7 @@
     <string name="heck_your_internet_connection_or_add_a_movie_manually">Check your internet connection or add a movie manually</string>
     <string name="find_a_movie_by_name">Find a movie by name</string>
     <string name="no_movies_with_this_name_were_found">No movies with this name were found...</string>
-    <string name="the_query_is_too_short">Find a movie by name (your query is too short)</string>
+    <string name="the_query_is_too_short">Find a movie by name\n( your query is too short )</string>
+    <string name="by_search">By search</string>
+    <string name="manually">Manually</string>
 </resources>
