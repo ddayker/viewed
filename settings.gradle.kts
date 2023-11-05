@@ -15,4 +15,7 @@ dependencyResolutionManagement {
 
 rootProject.name = "Viewed"
 include(":app")
- 
+include(":core")
+include(":watched")
+include(":details")
+include(":network")
