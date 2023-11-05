@@ -8,8 +8,8 @@ import androidx.compose.material3.windowsizeclass.ExperimentalMaterial3WindowSiz
 import androidx.compose.material3.windowsizeclass.calculateWindowSizeClass
 import androidx.core.view.WindowCompat
 import androidx.navigation.compose.rememberNavController
-import com.dayker.viewed.common.presentation.navigation.graphs.RootNavigationGraph
-import com.dayker.viewed.common.ui.theme.AppTheme
+import com.dayker.viewed.core.presentation.navigation.graphs.RootNavigationGraph
+import com.dayker.viewed.core.ui.theme.AppTheme
 
 class MainActivity : ComponentActivity() {
     @OptIn(ExperimentalMaterial3WindowSizeClassApi::class)

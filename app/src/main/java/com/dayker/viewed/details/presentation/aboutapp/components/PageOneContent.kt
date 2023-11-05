@@ -19,7 +19,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
 import com.dayker.viewed.R
-import com.dayker.viewed.common.presentation.components.Animation
+import com.dayker.viewed.core.presentation.components.Animation
 
 @Composable
 fun PageOneContentPortrait(

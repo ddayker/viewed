@@ -7,11 +7,11 @@ import androidx.navigation.NavType
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import androidx.navigation.navigation
-import com.dayker.viewed.common.presentation.navigation.graphs.Graph
-import com.dayker.viewed.common.presentation.navigation.navanimations.scaleInAnimation
-import com.dayker.viewed.common.presentation.navigation.navanimations.scaleOutAnimation
+import com.dayker.viewed.core.presentation.navigation.graphs.Graph
+import com.dayker.viewed.core.presentation.navigation.navanimations.scaleInAnimation
+import com.dayker.viewed.core.presentation.navigation.navanimations.scaleOutAnimation
 import com.dayker.viewed.network.presentation.navigation.DiscoverNavGraphConstants.MOVIE_ID_KEY
-import com.dayker.viewed.searchmovie.presentation.MovieSearchingScreen
+import com.dayker.viewed.watchedmovies.feature.moviesearch.presentation.MovieSearchingScreen
 
 fun NavGraphBuilder.discoverNavGraph(
     navController: NavHostController,
