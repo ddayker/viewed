@@ -19,7 +19,7 @@ import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.dayker.viewed.core.ui.components.MovieImage
-import com.dayker.viewed.watched.feature.moviesearch.domain.model.MoviePoster
+import com.dayker.viewed.watched.common.domain.model.MoviePoster
 
 @OptIn(ExperimentalLayoutApi::class)
 @Composable

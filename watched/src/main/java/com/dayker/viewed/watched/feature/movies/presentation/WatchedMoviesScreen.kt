@@ -19,6 +19,7 @@ import androidx.compose.material3.ScaffoldDefaults
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -32,7 +33,7 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.dayker.viewed.core.ui.components.CircularLoading
 import com.dayker.viewed.watched.R
-import com.dayker.viewed.watched.common.platform.navigation.WatchedNavGraphConstants.EMPTY_ID
+import com.dayker.viewed.watched.common.platform.navigation.WatchedNavGraphConstants.SAVED_MOVIE_ID_KEY
 import com.dayker.viewed.watched.common.platform.navigation.WatchedScreen
 import com.dayker.viewed.watched.feature.movies.presentation.components.AddingFAB
 import com.dayker.viewed.watched.feature.movies.presentation.components.WatchedList
@@ -46,6 +47,25 @@ fun WatchedMoviesScreen(
     navController: NavController,
     viewModel: WatchedMoviesViewModel = getViewModel()
 ) {
+    LaunchedEffect(key1 = true) {
+        viewModel.actionFlow.collect() { action ->
+            when (action) {
+                WatchedMoviesScreenAction.OpenManuallyAdding -> {
+                    navController.navigate(WatchedScreen.AddEditMovieScreen.route)
+                }
+
+                is WatchedMoviesScreenAction.OpenMovieInfo -> {
+                    val routeWithParams =
+                        "${WatchedScreen.AddEditMovieScreen.route}?${SAVED_MOVIE_ID_KEY}=${action.id}"
+                    navController.navigate(routeWithParams)
+                }
+
+                WatchedMoviesScreenAction.OpenSearch -> {
+                    navController.navigate(WatchedScreen.SearchScreen.route)
+                }
+            }
+        }
+    }
     val state = viewModel.state.value
     val scrollBehavior = TopAppBarDefaults.exitUntilCollapsedScrollBehavior()
     val nestedScrollConnection = remember {
@@ -90,12 +110,10 @@ fun WatchedMoviesScreen(
                         viewModel.onEvent(WatchedMoviesScreenEvent.ExtendFAB)
                     },
                     onManuallyClick = {
-                        val routeWithParams =
-                            "${WatchedScreen.AddEditMovieScreen.route}/${EMPTY_ID}"
-                        navController.navigate(routeWithParams)
+                        viewModel.onEvent(WatchedMoviesScreenEvent.AddManuallyClicked)
                     },
                     onSearchClick = {
-                        navController.navigate(WatchedScreen.SearchScreen.route)
+                        viewModel.onEvent(WatchedMoviesScreenEvent.AddBySearchClicked)
                     },
                 )
             }
@@ -111,9 +129,7 @@ fun WatchedMoviesScreen(
                 isOrderSectionVisible = state.isOrderSelectionVisible,
                 movies = state.movies,
                 onMovieClick = { id ->
-                    val routeWithParams = "${WatchedScreen.AddEditMovieScreen.route}/${id}"
-                    navController.navigate(routeWithParams)
-
+                    viewModel.onEvent(WatchedMoviesScreenEvent.MovieClicked(id))
                 },
                 order = state.moviesOrder,
                 onOrderChange = { order ->

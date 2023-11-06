@@ -53,7 +53,7 @@
     <string name="write_your_review">Write your review</string>
     <string name="write_the_name">Write the name</string>
     <string name="editing">Editing</string>
-    <string name="fill_in_the_required_fields_title_duration_viewing_date">Fill in the required fields:\n\n👉 Title\n\n👉 Duration\n\n👉 Viewing date</string>
+    <string name="fill_in_the_required_fields_title_duration_viewing_date">Check and fill in if empty:\n\n👉 Title\n\n👉 Duration\n\n👉 Release date\n\n👉 Viewing date</string>
     <string name="deleted">Deleted</string>
     <string name="saved">Saved</string>
     <string name="yes">Yes</string>
@@ -66,4 +66,5 @@
     <string name="the_query_is_too_short">Find a movie by name\n( your query is too short )</string>
     <string name="by_search">By search</string>
     <string name="manually">Manually</string>
+    <string name="movie_not_found">Movie not found 😕</string>
 </resources>

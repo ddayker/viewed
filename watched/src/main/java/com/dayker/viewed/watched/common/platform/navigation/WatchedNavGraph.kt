@@ -9,9 +9,11 @@ import androidx.navigation.navArgument
 import androidx.navigation.navigation
 import com.dayker.viewed.core.ui.navanimations.scaleInAnimation
 import com.dayker.viewed.core.ui.navanimations.scaleOutAnimation
-import com.dayker.viewed.watched.common.platform.navigation.WatchedNavGraphConstants.EMPTY_ID
 import com.dayker.viewed.watched.common.platform.navigation.WatchedNavGraphConstants.GRAPH_NAME
-import com.dayker.viewed.watched.common.platform.navigation.WatchedNavGraphConstants.MOVIE_ID_KEY
+import com.dayker.viewed.watched.common.platform.navigation.WatchedNavGraphConstants.NEW_MOVIE_ID_KEY
+import com.dayker.viewed.watched.common.platform.navigation.WatchedNavGraphConstants.NOT_NEW
+import com.dayker.viewed.watched.common.platform.navigation.WatchedNavGraphConstants.NOT_SAVED
+import com.dayker.viewed.watched.common.platform.navigation.WatchedNavGraphConstants.SAVED_MOVIE_ID_KEY
 import com.dayker.viewed.watched.feature.addeditmovie.presentation.AddEditMovieScreen
 import com.dayker.viewed.watched.feature.movieinfo.presentation.WatchedMovieScreen
 import com.dayker.viewed.watched.feature.moviesearch.presentation.MovieSearchingScreen
@@ -42,13 +44,19 @@ fun NavGraphBuilder.watchedNavGraph(navController: NavHostController, windowSize
             )
         }
         composable(
-            route = WatchedScreen.AddEditMovieScreen.route + "/{$MOVIE_ID_KEY}",
+            route = WatchedScreen.AddEditMovieScreen.route + "?${SAVED_MOVIE_ID_KEY}={$SAVED_MOVIE_ID_KEY}&${NEW_MOVIE_ID_KEY}={$NEW_MOVIE_ID_KEY}",
             arguments = listOf(
                 navArgument(
-                    name = MOVIE_ID_KEY
+                    name = SAVED_MOVIE_ID_KEY
                 ) {
                     type = NavType.LongType
-                    defaultValue = EMPTY_ID
+                    defaultValue = NOT_SAVED
+                },
+                navArgument(
+                    name = NEW_MOVIE_ID_KEY
+                ) {
+                    type = NavType.StringType
+                    defaultValue = NOT_NEW
                 }
             ),
             enterTransition = {
@@ -94,6 +102,8 @@ fun NavGraphBuilder.watchedNavGraph(navController: NavHostController, windowSize
 
 object WatchedNavGraphConstants {
     const val GRAPH_NAME = "watched_graph"
-    const val MOVIE_ID_KEY = "movie_id"
-    const val EMPTY_ID = -1L
+    const val SAVED_MOVIE_ID_KEY = "movie_id"
+    const val NEW_MOVIE_ID_KEY = "new_movie_id"
+    const val NOT_SAVED = -1L
+    const val NOT_NEW = ""
 }

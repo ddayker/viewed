@@ -1,7 +1,6 @@
-package com.dayker.viewed.watched.feature.moviesearch.data.datasource.remote
+package com.dayker.viewed.watched.common.data.datasource.remote
 
 import com.dayker.viewed.watched.BuildConfig
-
 
 object HttpRoutes {
 
@@ -10,6 +9,8 @@ object HttpRoutes {
     const val API_KEY_PARAM = "apikey"
 
     const val SEARCH_PARAM = "s"
+
+    const val ID_PARAM = "i"
 
     const val API_KEY = BuildConfig.API_KEY
 }

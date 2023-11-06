@@ -4,6 +4,7 @@ import com.dayker.viewed.watched.common.domain.model.Movie
 
 data class AddEditState(
     val movie: Movie = Movie(),
+    val loading: Boolean = false,
     val isEditing: Boolean = false,
     val selectedTabIndex: Int = 0,
     val showCalendarDialog: Boolean = false,

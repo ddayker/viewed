@@ -1,5 +1,6 @@
 package com.dayker.viewed.watched.di
 
+import com.dayker.viewed.watched.common.data.di.watchedDataModule
 import com.dayker.viewed.watched.common.domain.di.watchedDomainModule
 import com.dayker.viewed.watched.common.platform.di.watchedPlatformModule
 import com.dayker.viewed.watched.feature.addeditmovie.di.watchedAddEditModule
@@ -12,6 +13,7 @@ object WatchedModules {
         searchModel,
         watchedMoviesModule,
         watchedDomainModule,
+        watchedDataModule,
         watchedPlatformModule,
         watchedAddEditModule
     )

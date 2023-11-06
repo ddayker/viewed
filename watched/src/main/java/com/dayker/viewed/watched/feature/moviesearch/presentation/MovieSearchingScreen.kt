@@ -27,6 +27,8 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.dayker.viewed.core.ui.components.CircularLoading
 import com.dayker.viewed.watched.R
+import com.dayker.viewed.watched.common.platform.navigation.WatchedNavGraphConstants.NEW_MOVIE_ID_KEY
+import com.dayker.viewed.watched.common.platform.navigation.WatchedScreen
 import com.dayker.viewed.watched.feature.moviesearch.presentation.components.MoviePoster
 import com.dayker.viewed.watched.feature.moviesearch.presentation.components.SearchTopBar
 import com.dayker.viewed.watched.feature.moviesearch.presentation.components.SearchingMessage
@@ -42,9 +44,14 @@ fun MovieSearchingScreen(
 ) {
     val state = viewModel.state.value
     LaunchedEffect(key1 = true) {
-        viewModel.actionFlow.collect() { event ->
-            when (event) {
+        viewModel.actionFlow.collect() { action ->
+            when (action) {
                 MovieSearchingScreenAction.GoBack -> navController.navigateUp()
+                is MovieSearchingScreenAction.GoToAdding -> {
+                    val routeWithParams =
+                        "${WatchedScreen.AddEditMovieScreen.route}?${NEW_MOVIE_ID_KEY}=${action.id}"
+                    navController.navigate(routeWithParams)
+                }
             }
         }
     }
@@ -121,7 +128,10 @@ fun MovieSearchingScreen(
                 is MovieSearchingState.Movies -> {
                     LazyColumn(modifier = modifier) {
                         items(state.movies) { movie ->
-                            MoviePoster(movie = movie, onMovieClick = {})
+                            MoviePoster(movie = movie,
+                                onMovieClick = { id ->
+                                    viewModel.onEvent(MovieSearchingEvent.MovieClicked(id))
+                                })
                             Divider(
                                 Modifier.padding(horizontal = 40.dp, vertical = 6.dp),
                                 color = MaterialTheme.colorScheme.onTertiaryContainer

@@ -9,8 +9,11 @@ import com.dayker.viewed.watched.common.domain.usecase.GetWatchedMoviesUseCase
 import com.dayker.viewed.watched.common.domain.util.MoviesOrder
 import com.dayker.viewed.watched.common.domain.util.OrderType
 import kotlinx.coroutines.Job
+import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.launch
 
 class WatchedMoviesViewModel(
     private val getWatchedMoviesUseCase: GetWatchedMoviesUseCase
@@ -18,6 +21,9 @@ class WatchedMoviesViewModel(
 
     private val _state = mutableStateOf(WatchedMoviesState())
     val state: State<WatchedMoviesState> = _state
+
+    private val _actionFlow = MutableSharedFlow<WatchedMoviesScreenAction>()
+    val actionFlow = _actionFlow.asSharedFlow()
 
     private var getMoviesJob: Job? = null
 
@@ -95,6 +101,24 @@ class WatchedMoviesViewModel(
                 _state.value = state.value.copy(
                     isFABExtended = !state.value.isFABExtended
                 )
+            }
+
+            WatchedMoviesScreenEvent.AddBySearchClicked -> {
+                viewModelScope.launch {
+                    _actionFlow.emit(WatchedMoviesScreenAction.OpenSearch)
+                }
+            }
+
+            WatchedMoviesScreenEvent.AddManuallyClicked -> {
+                viewModelScope.launch {
+                    _actionFlow.emit(WatchedMoviesScreenAction.OpenManuallyAdding)
+                }
+            }
+
+            is WatchedMoviesScreenEvent.MovieClicked -> {
+                viewModelScope.launch {
+                    _actionFlow.emit(WatchedMoviesScreenAction.OpenMovieInfo(id = event.id))
+                }
             }
         }
     }

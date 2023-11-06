@@ -6,12 +6,12 @@ import java.util.Locale
 
 fun Long.toDate(): String {
     val date = Date(this)
-    val format = SimpleDateFormat("dd MMMM, yyyy", Locale.ENGLISH)
+    val format = SimpleDateFormat("dd MMMM yyyy", Locale.ENGLISH)
     return format.format(date)
 }
 
 fun String.toLongDate(): Long {
-    val format = SimpleDateFormat("dd MMMM, yyyy", Locale.ENGLISH)
+    val format = SimpleDateFormat("dd MMMM yyyy", Locale.ENGLISH)
     val date = format.parse(this)
     return date?.time ?: 0L
 }

@@ -1,4 +1,4 @@
-package com.dayker.viewed.watched.feature.moviesearch.domain.model
+package com.dayker.viewed.watched.common.domain.model
 
 data class MoviePoster(
     val id: String,

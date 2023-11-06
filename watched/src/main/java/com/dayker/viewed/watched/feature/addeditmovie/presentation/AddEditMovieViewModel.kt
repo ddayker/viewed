@@ -5,21 +5,23 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.dayker.viewed.watched.common.domain.usecase.AddWatchedMovieUseCase
-import com.dayker.viewed.watched.common.domain.usecase.DeleteWatchedMovieUseCase
-import com.dayker.viewed.watched.common.domain.usecase.GetWatchedMovieUseCase
+import com.dayker.viewed.core.util.Resource
+import com.dayker.viewed.watched.common.domain.repository.MovieSearchingRepository
+import com.dayker.viewed.watched.common.domain.repository.WatchedMoviesRepository
 import com.dayker.viewed.watched.common.platform.navigation.WatchedNavGraphConstants
-import com.dayker.viewed.watched.common.platform.navigation.WatchedNavGraphConstants.MOVIE_ID_KEY
+import com.dayker.viewed.watched.common.platform.navigation.WatchedNavGraphConstants.NEW_MOVIE_ID_KEY
+import com.dayker.viewed.watched.common.platform.navigation.WatchedNavGraphConstants.SAVED_MOVIE_ID_KEY
 import com.dayker.viewed.watched.common.utils.secondsToMinutes
 import com.dayker.viewed.watched.common.utils.toDate
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.asSharedFlow
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 
 class AddEditMovieViewModel(
-    private val addMovie: AddWatchedMovieUseCase,
-    private val deleteMovie: DeleteWatchedMovieUseCase,
-    private val getMovie: GetWatchedMovieUseCase,
+    private val watchedRepository: WatchedMoviesRepository,
+    private val movieSearchingRepository: MovieSearchingRepository,
     savedStateHandle: SavedStateHandle
 ) : ViewModel() {
 
@@ -32,11 +34,11 @@ class AddEditMovieViewModel(
     private var movieId: Long? = null
 
     init {
-        savedStateHandle.get<Long>(MOVIE_ID_KEY)?.let { id ->
-            if (id != WatchedNavGraphConstants.EMPTY_ID) {
+        savedStateHandle.get<Long>(SAVED_MOVIE_ID_KEY)?.let { id ->
+            if (id != WatchedNavGraphConstants.NOT_SAVED) {
                 _state.value = state.value.copy(isEditing = true)
                 viewModelScope.launch {
-                    getMovie(id)?.also { movie ->
+                    watchedRepository.getMovieById(id)?.also { movie ->
                         movieId = movie.id
                         _state.value = state.value.copy(
                             movie = movie.copy()
@@ -45,11 +47,40 @@ class AddEditMovieViewModel(
                 }
             }
         }
+        savedStateHandle.get<String>(NEW_MOVIE_ID_KEY)?.let { id ->
+            if (id != WatchedNavGraphConstants.NOT_NEW) {
+                viewModelScope.launch {
+                    movieSearchingRepository.getMovieInfo(id).onEach { result ->
+                        when (result) {
+                            is Resource.Success -> {
+                                if (result.data != null) {
+                                    _state.value = state.value.copy(
+                                        movie = result.data!!.copy(),
+                                        loading = false
+                                    )
+                                }
+                            }
+
+                            is Resource.Error -> {
+                                _state.value = state.value.copy(loading = false)
+                                _actionFlow.emit(AddEditMovieScreenAction.ShowError)
+
+                            }
+
+                            is Resource.Loading -> {
+                                _state.value = state.value.copy(loading = true)
+                            }
+                        }
+                    }.launchIn(this)
+                }
+            }
+        }
     }
 
     private fun isPossibleToSave(): Boolean {
         return with(state.value.movie) {
-            title.trim().isNotEmpty() && durationMin != 0L && viewingDate != null
+            title.trim()
+                .isNotEmpty() && durationMin != 0L && viewingDate != null && releaseDate != null
         }
     }
 
@@ -176,7 +207,7 @@ class AddEditMovieViewModel(
 
                 AddEditMovieEvent.DeleteMovie -> {
                     viewModelScope.launch {
-                        deleteMovie(movie = state.value.movie.copy(id = movieId))
+                        watchedRepository.deleteMovie(movie = state.value.movie.copy(id = movieId))
                         _actionFlow.emit(AddEditMovieScreenAction.DeleteMovie)
                     }
                 }
@@ -185,7 +216,7 @@ class AddEditMovieViewModel(
                     viewModelScope.launch {
                         if (isPossibleToSave()) {
                             val movie = state.value.movie.copy(id = movieId)
-                            addMovie(movie)
+                            watchedRepository.insertMovie(movie)
                             _actionFlow.emit(AddEditMovieScreenAction.SaveMovie(isPossibleToSave = true))
                         } else {
                             _actionFlow.emit(AddEditMovieScreenAction.SaveMovie(isPossibleToSave = false))

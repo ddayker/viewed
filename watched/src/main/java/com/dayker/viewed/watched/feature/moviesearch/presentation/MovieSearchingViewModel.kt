@@ -6,7 +6,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.dayker.viewed.core.util.Resource
-import com.dayker.viewed.watched.feature.moviesearch.domain.repository.MovieSearchingRepository
+import com.dayker.viewed.watched.common.domain.repository.MovieSearchingRepository
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -79,6 +79,12 @@ class MovieSearchingViewModel(
 
             is MovieSearchingEvent.Search -> {
                 onSearch(event.query)
+            }
+
+            is MovieSearchingEvent.MovieClicked -> {
+                viewModelScope.launch {
+                    _actionFlow.emit(MovieSearchingScreenAction.GoToAdding(event.id))
+                }
             }
         }
     }

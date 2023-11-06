@@ -1,6 +1,6 @@
 package com.dayker.viewed.watched.feature.moviesearch.presentation
 
-import com.dayker.viewed.watched.feature.moviesearch.domain.model.MoviePoster
+import com.dayker.viewed.watched.common.domain.model.MoviePoster
 
 sealed class MovieSearchingState(val query: String = "") {
 
