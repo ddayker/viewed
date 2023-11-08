@@ -1,5 +1,6 @@
 package com.dayker.viewed.watched.feature.moviesearch.presentation
 
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.exclude
@@ -9,6 +10,7 @@ import androidx.compose.foundation.layout.navigationBars
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Divider
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FabPosition
@@ -78,7 +80,13 @@ fun MovieSearchingScreen(
         Box(
             modifier = modifier
                 .padding(top = it.calculateTopPadding())
-                .fillMaxSize(),
+                .padding(top = 15.dp, end = 20.dp, start = 20.dp, bottom = 60.dp)
+                .fillMaxSize()
+                .border(
+                    width = 2.dp,
+                    color = MaterialTheme.colorScheme.onTertiaryContainer,
+                    shape = RoundedCornerShape(12.dp)
+                ),
             contentAlignment = Alignment.TopCenter,
         ) {
             when (state) {

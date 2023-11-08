@@ -7,6 +7,8 @@ import com.dayker.viewed.watched.common.data.datasource.remote.HttpRoutes.API_KE
 import com.dayker.viewed.watched.common.data.datasource.remote.HttpRoutes.BASE_URL
 import com.dayker.viewed.watched.common.data.datasource.remote.HttpRoutes.ID_PARAM
 import com.dayker.viewed.watched.common.data.datasource.remote.HttpRoutes.SEARCH_PARAM
+import com.dayker.viewed.watched.common.data.datasource.remote.HttpRoutes.TYPE_MOVIE
+import com.dayker.viewed.watched.common.data.datasource.remote.HttpRoutes.TYPE_PARAM
 import com.dayker.viewed.watched.common.data.datasource.remote.dto.MovieInfo
 import com.dayker.viewed.watched.common.data.datasource.remote.dto.MovieResponse
 import com.dayker.viewed.watched.common.data.datasource.remote.dto.SearchResponse
@@ -28,7 +30,8 @@ class NetworkMovieSearchingDataSource(
                     protocol = URLProtocol.HTTPS
                     host = BASE_URL
                     parameters.append(API_KEY_PARAM, API_KEY)
-                    parameters.append(SEARCH_PARAM, query)
+                    parameters.append(TYPE_PARAM, TYPE_MOVIE)
+                    parameters.append(SEARCH_PARAM, query.trim())
                 }
             }
             val jsonBody = response.bodyAsText()

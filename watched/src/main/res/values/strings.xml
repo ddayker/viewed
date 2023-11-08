@@ -67,4 +67,12 @@
     <string name="by_search">By search</string>
     <string name="manually">Manually</string>
     <string name="movie_not_found">Movie not found 😕</string>
+    <string name="minutes">" minutes"</string>
+    <string name="release_date_">Release date</string>
+    <string name="director">Director</string>
+    <string name="review_">Review</string>
+    <string name="genres">Genres</string>
+    <string name="writers">Writers</string>
+    <string name="stars_">Stars</string>
+    <string name="empty_review">---</string>
 </resources>

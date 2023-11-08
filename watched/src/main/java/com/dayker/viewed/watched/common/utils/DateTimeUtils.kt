@@ -11,9 +11,13 @@ fun Long.toDate(): String {
 }
 
 fun String.toLongDate(): Long {
-    val format = SimpleDateFormat("dd MMMM yyyy", Locale.ENGLISH)
-    val date = format.parse(this)
-    return date?.time ?: 0L
+    return try {
+        val format = SimpleDateFormat("dd MMMM yyyy", Locale.ENGLISH)
+        val date = format.parse(this)
+        date?.time ?: 0L
+    } catch (e: Exception) {
+        0L
+    }
 }
 
 fun Long.secondsToMinutes(): Long {

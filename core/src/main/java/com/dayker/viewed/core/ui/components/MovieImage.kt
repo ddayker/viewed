@@ -53,7 +53,7 @@ fun MovieImage(
                     SubcomposeAsyncImageContent(
                         modifier = Modifier
                             .fillMaxHeight()
-                            .clip(RoundedCornerShape(30.dp)),
+                            .clip(RoundedCornerShape(20.dp)),
                         contentScale = ContentScale.FillHeight
                     )
                 }

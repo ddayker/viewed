@@ -25,6 +25,7 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.dayker.viewed.core.ui.components.CircularLoading
 import com.dayker.viewed.watched.R
+import com.dayker.viewed.watched.common.platform.navigation.WatchedScreen
 import com.dayker.viewed.watched.feature.addeditmovie.presentation.components.dialogs.DeleteConfirmationDialog
 import com.dayker.viewed.watched.feature.addeditmovie.presentation.components.dialogs.SavingErrorDialog
 import com.dayker.viewed.watched.feature.addeditmovie.presentation.components.elements.AddEditMovieTabRow
@@ -46,18 +47,29 @@ fun AddEditMovieScreen(
     val snackbarHostState = remember { SnackbarHostState() }
     val errorMessage = stringResource(R.string.movie_not_found)
     LaunchedEffect(key1 = true) {
-        viewModel.actionFlow.collect() { event ->
-            when (event) {
+        viewModel.actionFlow.collect() { action ->
+            when (action) {
                 is AddEditMovieScreenAction.SaveMovie -> {
-                    if (event.isPossibleToSave) {
-                        navController.navigateUp()
+                    if (action.isPossibleToSave) {
+                        val routeWithParams =
+                            "${WatchedScreen.WatchedMovieScreen.route}/${action.id}"
+                        navController.navigate(routeWithParams) {
+                            navController.previousBackStackEntry?.destination?.let {
+                                popUpTo(it.id) {
+                                    inclusive = true
+                                }
+                            }
+                        }
                     } else {
                         viewModel.onEvent(AddEditMovieEvent.ChangeSavingErrorDialogVisibility)
                     }
                 }
 
                 AddEditMovieScreenAction.DeleteMovie -> {
-                    navController.navigateUp()
+                    navController.apply {
+                        popBackStack()
+                        navigateUp()
+                    }
                 }
 
                 AddEditMovieScreenAction.ReturnBack -> {

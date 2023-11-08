@@ -15,7 +15,7 @@ import com.dayker.viewed.watched.common.platform.navigation.WatchedNavGraphConst
 import com.dayker.viewed.watched.common.platform.navigation.WatchedNavGraphConstants.NOT_SAVED
 import com.dayker.viewed.watched.common.platform.navigation.WatchedNavGraphConstants.SAVED_MOVIE_ID_KEY
 import com.dayker.viewed.watched.feature.addeditmovie.presentation.AddEditMovieScreen
-import com.dayker.viewed.watched.feature.movieinfo.presentation.WatchedMovieScreen
+import com.dayker.viewed.watched.feature.moviereview.presentation.MovieReviewScreen
 import com.dayker.viewed.watched.feature.moviesearch.presentation.MovieSearchingScreen
 
 fun NavGraphBuilder.watchedNavGraph(navController: NavHostController, windowSize: WindowSizeClass) {
@@ -24,7 +24,15 @@ fun NavGraphBuilder.watchedNavGraph(navController: NavHostController, windowSize
         startDestination = WatchedScreen.WatchedMovieScreen.route
     ) {
         composable(
-            route = WatchedScreen.WatchedMovieScreen.route,
+            route = WatchedScreen.WatchedMovieScreen.route + "/{$SAVED_MOVIE_ID_KEY}",
+            arguments = listOf(
+                navArgument(
+                    name = SAVED_MOVIE_ID_KEY
+                ) {
+                    type = NavType.LongType
+                    defaultValue = NOT_SAVED
+                }
+            ),
             enterTransition = {
                 scaleInAnimation()
             },
@@ -38,7 +46,7 @@ fun NavGraphBuilder.watchedNavGraph(navController: NavHostController, windowSize
                 scaleOutAnimation()
             }
         ) {
-            WatchedMovieScreen(
+            MovieReviewScreen(
                 windowSize = windowSize,
                 navController = navController
             )

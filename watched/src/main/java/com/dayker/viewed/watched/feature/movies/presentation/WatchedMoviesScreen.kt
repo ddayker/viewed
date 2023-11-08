@@ -33,7 +33,6 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.dayker.viewed.core.ui.components.CircularLoading
 import com.dayker.viewed.watched.R
-import com.dayker.viewed.watched.common.platform.navigation.WatchedNavGraphConstants.SAVED_MOVIE_ID_KEY
 import com.dayker.viewed.watched.common.platform.navigation.WatchedScreen
 import com.dayker.viewed.watched.feature.movies.presentation.components.AddingFAB
 import com.dayker.viewed.watched.feature.movies.presentation.components.WatchedList
@@ -56,8 +55,14 @@ fun WatchedMoviesScreen(
 
                 is WatchedMoviesScreenAction.OpenMovieInfo -> {
                     val routeWithParams =
-                        "${WatchedScreen.AddEditMovieScreen.route}?${SAVED_MOVIE_ID_KEY}=${action.id}"
-                    navController.navigate(routeWithParams)
+                        "${WatchedScreen.WatchedMovieScreen.route}/${action.id}"
+                    navController.navigate(route = routeWithParams) {
+                        navController.previousBackStackEntry?.destination?.let {
+                            popUpTo(it.id) {
+                                inclusive = true
+                            }
+                        }
+                    }
                 }
 
                 WatchedMoviesScreenAction.OpenSearch -> {

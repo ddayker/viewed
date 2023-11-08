@@ -28,8 +28,8 @@ class WatchedMoviesRepositoryImpl(
      * (the image that was uploaded from the api does not need to be saved)
      *
      */
-    override suspend fun insertMovie(movie: Movie) {
-        val id = movie.id ?: localMoviesDataSource.insertMovie(movie)
+    override suspend fun insertMovie(movie: Movie): Long {
+        val id = localMoviesDataSource.insertMovie(movie)
         if (movie.imageURL != "" && !movie.imageURL.startsWith(URLProtocol.HTTPS.name)) {
             try {
                 val imgFileName = imageDataSource.saveImage(uri = movie.imageURL, movieId = id)
@@ -38,6 +38,7 @@ class WatchedMoviesRepositoryImpl(
                 println(e)
             }
         }
+        return id
     }
 
     override suspend fun deleteMovie(movie: Movie) {

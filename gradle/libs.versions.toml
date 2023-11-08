@@ -44,6 +44,7 @@ logback-classic = "1.4.11"
 ktor = "2.3.5"
 appcompat = "1.6.1"
 material = "1.10.0"
+palette = "1.0.0"
 
 [libraries]
 core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "core-ktx" }
@@ -109,6 +110,7 @@ ktor-serialization-kotlinx-json = { group = "io.ktor", name = "ktor-serializatio
 ktor-client-content-negotiation = { group = "io.ktor", name = "ktor-client-content-negotiation", version.ref = "ktor" }
 appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
 material = { group = "com.google.android.material", name = "material", version.ref = "material" }
+androidx-palette = { group = "androidx.palette", name = "palette", version.ref = "palette" }
 
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }

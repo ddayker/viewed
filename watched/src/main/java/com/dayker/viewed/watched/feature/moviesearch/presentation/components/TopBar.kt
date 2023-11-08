@@ -2,11 +2,9 @@ package com.dayker.viewed.watched.feature.moviesearch.presentation.components
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -56,14 +54,13 @@ fun SearchTopBar(
                     SearchTextField(
                         modifier = modifier.padding(
                             start = 5.dp,
-                            end = 16.dp
+                            end = 20.dp
                         ),
                         query = query,
                         onValueChange = { newQuery ->
                             onValueChange(newQuery)
                         }
                     )
-                    Spacer(modifier = Modifier.width(16.dp))
                 }
             },
             scrollBehavior = scrollBehavior,

@@ -216,8 +216,13 @@ class AddEditMovieViewModel(
                     viewModelScope.launch {
                         if (isPossibleToSave()) {
                             val movie = state.value.movie.copy(id = movieId)
-                            watchedRepository.insertMovie(movie)
-                            _actionFlow.emit(AddEditMovieScreenAction.SaveMovie(isPossibleToSave = true))
+                            val id = watchedRepository.insertMovie(movie)
+                            _actionFlow.emit(
+                                AddEditMovieScreenAction.SaveMovie(
+                                    isPossibleToSave = true,
+                                    id = id
+                                )
+                            )
                         } else {
                             _actionFlow.emit(AddEditMovieScreenAction.SaveMovie(isPossibleToSave = false))
                         }

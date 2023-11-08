@@ -56,9 +56,8 @@ fun NavigationScreen(
 }
 
 fun elementOnClick(route: String, navController: NavHostController) {
-    val prePreviousEntry = navController.previousBackStackEntry
     navController.navigate(route = route) {
-        prePreviousEntry?.destination?.let {
+        navController.previousBackStackEntry?.destination?.let {
             popUpTo(it.id) {
                 inclusive = true
             }

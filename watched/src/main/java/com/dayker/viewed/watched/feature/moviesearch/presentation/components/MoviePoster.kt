@@ -59,7 +59,7 @@ fun MoviePoster(
                         }
                     },
                     style = MaterialTheme.typography.displayMedium,
-                    color = MaterialTheme.colorScheme.onPrimaryContainer
+                    color = MaterialTheme.colorScheme.onBackground
                 )
             }
         }

@@ -12,5 +12,9 @@ object HttpRoutes {
 
     const val ID_PARAM = "i"
 
+    const val TYPE_PARAM = "type"
+
+    const val TYPE_MOVIE = "movie"
+
     const val API_KEY = BuildConfig.API_KEY
 }

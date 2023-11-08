@@ -23,7 +23,7 @@ fun DefaultMovieImage(
         contentDescription = null,
         modifier = modifier
             .fillMaxSize()
-            .clip(RoundedCornerShape(25.dp))
+            .clip(RoundedCornerShape(20.dp))
             .background(color = MaterialTheme.colorScheme.secondaryContainer),
         contentScale = ContentScale.Fit,
         colorFilter = ColorFilter.tint(MaterialTheme.colorScheme.onSecondaryContainer)
