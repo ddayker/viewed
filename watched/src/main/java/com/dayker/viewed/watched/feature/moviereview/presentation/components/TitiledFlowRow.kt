@@ -35,7 +35,7 @@ fun TitledFlowRow(
                         modifier = Modifier
                             .padding(top = 6.dp, end = 6.dp)
                             .background(
-                                color = MaterialTheme.colorScheme.tertiaryContainer,
+                                color = MaterialTheme.colorScheme.secondaryContainer,
                                 shape = RoundedCornerShape(5.dp)
                             )
                             .padding(vertical = 2.dp, horizontal = 2.dp)

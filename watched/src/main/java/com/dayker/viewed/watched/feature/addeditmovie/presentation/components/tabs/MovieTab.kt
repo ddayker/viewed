@@ -19,29 +19,28 @@ import com.dayker.viewed.watched.R
 import com.dayker.viewed.watched.common.utils.minutesToSeconds
 import com.dayker.viewed.watched.common.utils.toLongDate
 import com.dayker.viewed.watched.feature.addeditmovie.presentation.AddEditMovieEvent
-import com.dayker.viewed.watched.feature.addeditmovie.presentation.AddEditMovieViewModel
+import com.dayker.viewed.watched.feature.addeditmovie.presentation.AddEditState
 import com.dayker.viewed.watched.feature.addeditmovie.presentation.components.dialogs.CalendarPickerDialog
 import com.dayker.viewed.watched.feature.addeditmovie.presentation.components.dialogs.InputTextDialog
 import com.dayker.viewed.watched.feature.addeditmovie.presentation.components.dialogs.TimeDurationDialog
 import com.dayker.viewed.watched.feature.addeditmovie.presentation.components.elements.ReadOnlyTextField
 import com.dayker.viewed.watched.feature.addeditmovie.presentation.components.elements.ValueTitle
-import org.koin.androidx.compose.getViewModel
 
 @Composable
 fun MovieTab(
     modifier: Modifier = Modifier,
-    viewModel: AddEditMovieViewModel = getViewModel()
+    state: AddEditState,
+    onEvent: (AddEditMovieEvent) -> Unit
 ) {
-    val state = viewModel.state.value
     InputTextDialog(
         visible = state.showInputDialog,
         title = stringResource(R.string.movie_title),
         text = state.movie.title,
         onPositiveClick = { title ->
-            viewModel.onEvent(AddEditMovieEvent.ChangeTitle(title))
+            onEvent(AddEditMovieEvent.ChangeTitle(title))
         },
         onCloseRequest = {
-            viewModel.onEvent(AddEditMovieEvent.ChangeInputDialogVisibility)
+            onEvent(AddEditMovieEvent.ChangeInputDialogVisibility)
         },
     )
 
@@ -49,11 +48,11 @@ fun MovieTab(
         visible = state.showCalendarDialog,
         pickedDate = state.movie.releaseDate?.toLongDate(),
         onConfirm = { dateInMillis ->
-            viewModel.onEvent(AddEditMovieEvent.ChangeCalendarDialogVisibility)
-            viewModel.onEvent(AddEditMovieEvent.ChangeReleaseDate(dateInMillis))
+            onEvent(AddEditMovieEvent.ChangeCalendarDialogVisibility)
+            onEvent(AddEditMovieEvent.ChangeReleaseDate(dateInMillis))
         },
         onDismissRequest = {
-            viewModel.onEvent(AddEditMovieEvent.ChangeCalendarDialogVisibility)
+            onEvent(AddEditMovieEvent.ChangeCalendarDialogVisibility)
         }
     )
 
@@ -61,10 +60,10 @@ fun MovieTab(
         visible = state.showDurationDialog,
         selectedTimeInSeconds = state.movie.durationMin.minutesToSeconds(),
         onPositiveClick = { durationInSeconds ->
-            viewModel.onEvent(AddEditMovieEvent.ChangeDuration(durationInSeconds))
+            onEvent(AddEditMovieEvent.ChangeDuration(durationInSeconds))
         },
         onCloseRequest = {
-            viewModel.onEvent(AddEditMovieEvent.ChangeDurationDialogVisibility)
+            onEvent(AddEditMovieEvent.ChangeDurationDialogVisibility)
         }
     )
 
@@ -85,7 +84,7 @@ fun MovieTab(
                     )
                 },
                 onClick = {
-                    viewModel.onEvent(AddEditMovieEvent.ChangeInputDialogVisibility)
+                    onEvent(AddEditMovieEvent.ChangeInputDialogVisibility)
                 }
             )
             ReadOnlyTextField(
@@ -102,7 +101,7 @@ fun MovieTab(
                     )
                 },
                 onClick = {
-                    viewModel.onEvent(AddEditMovieEvent.ChangeCalendarDialogVisibility)
+                    onEvent(AddEditMovieEvent.ChangeCalendarDialogVisibility)
                 }
             )
             ReadOnlyTextField(
@@ -119,7 +118,7 @@ fun MovieTab(
                     )
                 },
                 onClick = {
-                    viewModel.onEvent(AddEditMovieEvent.ChangeDurationDialogVisibility)
+                    onEvent(AddEditMovieEvent.ChangeDurationDialogVisibility)
                 }
             )
             ReadOnlyTextField(

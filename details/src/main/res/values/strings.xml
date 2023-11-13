@@ -22,4 +22,10 @@
     <string name="viewed_bug_report">Viewed Bug Report</string>
     <string name="app_version_sdk_device_problem">App version: %1$s SDK %2$s \nDevice: %3$s \nProblem:</string>
     <string name="mailto_subject_body_to"><![CDATA[mailto:?subject=%1$s&body=%2$s&to=%3$s]]></string>
+    <string name="about_viewed">About Viewed</string>
+    <string name="error">Error!</string>
+    <string name="you_are_signed_in">You are signed in!</string>
+    <string name="you_are_signed_out">You are signed out!</string>
+    <string name="you_are_logged_in">You are logged in</string>
+    <string name="sign_out">Sign out</string>
 </resources>

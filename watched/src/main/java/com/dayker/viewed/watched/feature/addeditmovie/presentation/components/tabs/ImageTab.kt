@@ -24,24 +24,24 @@ import coil.ImageLoader.*
 import com.dayker.viewed.core.ui.components.MovieImage
 import com.dayker.viewed.watched.R
 import com.dayker.viewed.watched.feature.addeditmovie.presentation.AddEditMovieEvent
-import com.dayker.viewed.watched.feature.addeditmovie.presentation.AddEditMovieViewModel
+import com.dayker.viewed.watched.feature.addeditmovie.presentation.AddEditState
 import com.google.accompanist.adaptive.HorizontalTwoPaneStrategy
 import com.google.accompanist.adaptive.TwoPane
 import com.google.accompanist.adaptive.VerticalTwoPaneStrategy
-import org.koin.androidx.compose.getViewModel
 
 @SuppressLint("Recycle")
 @Composable
 fun ImageTab(
     modifier: Modifier = Modifier,
     windowSize: WindowSizeClass,
-    viewModel: AddEditMovieViewModel = getViewModel()
+    state: AddEditState,
+    onEvent: (AddEditMovieEvent) -> Unit
 ) {
     val photoPickerLauncher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.PickVisualMedia(),
         onResult = { uri ->
             if (uri == null) return@rememberLauncherForActivityResult
-            viewModel.onEvent(AddEditMovieEvent.ChangeImage(uri.toString()))
+            onEvent(AddEditMovieEvent.ChangeImage(uri.toString()))
         }
     )
 
@@ -49,7 +49,7 @@ fun ImageTab(
         modifier = modifier,
         first = {
             MovieImage(
-                imageUri = viewModel.state.value.movie.imageURL,
+                imageUri = state.movie.imageURL,
                 modifier = Modifier.padding(all = 20.dp)
             )
         },

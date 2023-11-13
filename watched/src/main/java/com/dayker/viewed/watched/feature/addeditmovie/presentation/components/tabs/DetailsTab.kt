@@ -21,19 +21,18 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.dayker.viewed.watched.R
 import com.dayker.viewed.watched.feature.addeditmovie.presentation.AddEditMovieEvent
-import com.dayker.viewed.watched.feature.addeditmovie.presentation.AddEditMovieViewModel
+import com.dayker.viewed.watched.feature.addeditmovie.presentation.AddEditState
 import com.dayker.viewed.watched.feature.addeditmovie.presentation.components.dialogs.InputTextDialog
 import com.dayker.viewed.watched.feature.addeditmovie.presentation.components.dialogs.ListDialog
 import com.dayker.viewed.watched.feature.addeditmovie.presentation.components.elements.FlowRowChips
 import com.dayker.viewed.watched.feature.addeditmovie.presentation.components.elements.ValueTitle
-import org.koin.androidx.compose.getViewModel
 
 @Composable
 fun DetailsTab(
     modifier: Modifier = Modifier,
-    viewModel: AddEditMovieViewModel = getViewModel()
+    state: AddEditState,
+    onEvent: (AddEditMovieEvent) -> Unit
 ) {
-    val state = viewModel.state.value
     var inputDialogAction by remember {
         mutableStateOf<InputAction>(InputAction.UpdateDirectors)
     }
@@ -42,11 +41,11 @@ fun DetailsTab(
         title = stringResource(R.string.pick_genres),
         visible = state.showGenresListDialog,
         onPositiveClick = { genres ->
-            viewModel.onEvent(AddEditMovieEvent.UpdateGenres(genres))
+            onEvent(AddEditMovieEvent.UpdateGenres(genres))
         },
         pickedGenres = state.movie.genres,
         onCloseRequest = {
-            viewModel.onEvent(AddEditMovieEvent.ChangeGenreListDialogVisibility)
+            onEvent(AddEditMovieEvent.ChangeGenreListDialogVisibility)
         }
     )
 
@@ -57,20 +56,20 @@ fun DetailsTab(
         onPositiveClick = { name ->
             when (inputDialogAction) {
                 InputAction.UpdateDirectors -> {
-                    viewModel.onEvent(AddEditMovieEvent.AddDirector(name))
+                    onEvent(AddEditMovieEvent.AddDirector(name))
                 }
 
                 InputAction.UpdateStars -> {
-                    viewModel.onEvent(AddEditMovieEvent.AddStar(name))
+                    onEvent(AddEditMovieEvent.AddStar(name))
                 }
 
                 InputAction.UpdateWriters -> {
-                    viewModel.onEvent(AddEditMovieEvent.AddWriter(name))
+                    onEvent(AddEditMovieEvent.AddWriter(name))
                 }
             }
         },
         onCloseRequest = {
-            viewModel.onEvent(AddEditMovieEvent.ChangeInputDialogVisibility)
+            onEvent(AddEditMovieEvent.ChangeInputDialogVisibility)
         }
     )
     Box(
@@ -90,7 +89,7 @@ fun DetailsTab(
                     )
                 },
                 onClick = {
-                    viewModel.onEvent(AddEditMovieEvent.ChangeGenreListDialogVisibility)
+                    onEvent(AddEditMovieEvent.ChangeGenreListDialogVisibility)
                 }
             )
             state.movie.genres.let {
@@ -98,7 +97,7 @@ fun DetailsTab(
                     FlowRowChips(
                         labels = it,
                         onClick = { index ->
-                            viewModel.onEvent(AddEditMovieEvent.RemoveGenre(index))
+                            onEvent(AddEditMovieEvent.RemoveGenre(index))
                         }
                     )
                 } else {
@@ -116,7 +115,7 @@ fun DetailsTab(
                 },
                 onClick = {
                     inputDialogAction = InputAction.UpdateDirectors
-                    viewModel.onEvent(AddEditMovieEvent.ChangeInputDialogVisibility)
+                    onEvent(AddEditMovieEvent.ChangeInputDialogVisibility)
                 }
             )
             state.movie.directors.let {
@@ -124,7 +123,7 @@ fun DetailsTab(
                     FlowRowChips(
                         labels = it,
                         onClick = { index ->
-                            viewModel.onEvent(AddEditMovieEvent.RemoveDirector(index))
+                            onEvent(AddEditMovieEvent.RemoveDirector(index))
                         }
                     )
                 } else {
@@ -142,7 +141,7 @@ fun DetailsTab(
                 },
                 onClick = {
                     inputDialogAction = InputAction.UpdateWriters
-                    viewModel.onEvent(AddEditMovieEvent.ChangeInputDialogVisibility)
+                    onEvent(AddEditMovieEvent.ChangeInputDialogVisibility)
                 }
             )
             state.movie.writers.let {
@@ -150,7 +149,7 @@ fun DetailsTab(
                     FlowRowChips(
                         labels = it,
                         onClick = { index ->
-                            viewModel.onEvent(AddEditMovieEvent.RemoveWriter(index))
+                            onEvent(AddEditMovieEvent.RemoveWriter(index))
                         }
                     )
                 } else {
@@ -168,7 +167,7 @@ fun DetailsTab(
                 },
                 onClick = {
                     inputDialogAction = InputAction.UpdateStars
-                    viewModel.onEvent(AddEditMovieEvent.ChangeInputDialogVisibility)
+                    onEvent(AddEditMovieEvent.ChangeInputDialogVisibility)
                 }
             )
             state.movie.stars.let {
@@ -176,7 +175,7 @@ fun DetailsTab(
                     FlowRowChips(
                         labels = it,
                         onClick = { index ->
-                            viewModel.onEvent(AddEditMovieEvent.RemoveStar(index))
+                            onEvent(AddEditMovieEvent.RemoveStar(index))
                         }
                     )
                 } else {

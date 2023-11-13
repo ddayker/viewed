@@ -52,6 +52,7 @@ dependencies {
     implementation(libs.ui.tooling.preview)
     implementation(libs.material3)
     implementation(libs.androidx.room.ktx)
+    implementation(libs.androidx.lifecycle.runtime.compose)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.test.ext.junit)
     androidTestImplementation(libs.espresso.core)
@@ -80,7 +81,10 @@ dependencies {
     implementation(libs.koin.compose)
     implementation(libs.koin.core)
     implementation(libs.material3.window.size)
-
+    implementation(libs.lottie.compose)
+    implementation(libs.coil)
+    implementation(libs.coil.compose)
 
     implementation(project(":core"))
+    implementation(project(":authentication"))
 }

@@ -19,30 +19,28 @@ import androidx.compose.ui.unit.dp
 import com.dayker.viewed.watched.R
 import com.dayker.viewed.watched.common.utils.toLongDate
 import com.dayker.viewed.watched.feature.addeditmovie.presentation.AddEditMovieEvent
-import com.dayker.viewed.watched.feature.addeditmovie.presentation.AddEditMovieViewModel
+import com.dayker.viewed.watched.feature.addeditmovie.presentation.AddEditState
 import com.dayker.viewed.watched.feature.addeditmovie.presentation.components.dialogs.CalendarPickerDialog
 import com.dayker.viewed.watched.feature.addeditmovie.presentation.components.dialogs.InputTextDialog
 import com.dayker.viewed.watched.feature.addeditmovie.presentation.components.elements.MovieRating
 import com.dayker.viewed.watched.feature.addeditmovie.presentation.components.elements.ReadOnlyTextField
 import com.dayker.viewed.watched.feature.addeditmovie.presentation.components.elements.ValueTitle
-import org.koin.androidx.compose.getViewModel
 
 @Composable
 fun ReviewTab(
     modifier: Modifier = Modifier,
-    viewModel: AddEditMovieViewModel = getViewModel()
+    state: AddEditState,
+    onEvent: (AddEditMovieEvent) -> Unit
 ) {
-    val state = viewModel.state.value
-
     InputTextDialog(
         visible = state.showInputDialog,
         title = stringResource(R.string.write_your_review),
         text = state.movie.review,
         onPositiveClick = { review ->
-            viewModel.onEvent(AddEditMovieEvent.ChangeReview(review = review))
+            onEvent(AddEditMovieEvent.ChangeReview(review = review))
         },
         onCloseRequest = {
-            viewModel.onEvent(AddEditMovieEvent.ChangeInputDialogVisibility)
+            onEvent(AddEditMovieEvent.ChangeInputDialogVisibility)
         },
     )
 
@@ -50,11 +48,11 @@ fun ReviewTab(
         visible = state.showCalendarDialog,
         pickedDate = state.movie.releaseDate?.toLongDate(),
         onConfirm = { dateInMillis ->
-            viewModel.onEvent(AddEditMovieEvent.ChangeCalendarDialogVisibility)
-            viewModel.onEvent(AddEditMovieEvent.ChangeViewingDate(dateInMillis))
+            onEvent(AddEditMovieEvent.ChangeCalendarDialogVisibility)
+            onEvent(AddEditMovieEvent.ChangeViewingDate(dateInMillis))
         },
         onDismissRequest = {
-            viewModel.onEvent(AddEditMovieEvent.ChangeCalendarDialogVisibility)
+            onEvent(AddEditMovieEvent.ChangeCalendarDialogVisibility)
         }
     )
 
@@ -76,7 +74,7 @@ fun ReviewTab(
                     )
                 },
                 onClick = {
-                    viewModel.onEvent(AddEditMovieEvent.ChangeCalendarDialogVisibility)
+                    onEvent(AddEditMovieEvent.ChangeCalendarDialogVisibility)
                 }
             )
             ReadOnlyTextField(
@@ -87,7 +85,7 @@ fun ReviewTab(
                 text = stringResource(id = R.string.rating),
                 rating = state.movie.rating,
                 onValueChange = { rating ->
-                    viewModel.onEvent(AddEditMovieEvent.ChangeRating(rating))
+                    onEvent(AddEditMovieEvent.ChangeRating(rating))
                 })
             ValueTitle(
                 modifier = Modifier.padding(top = 10.dp),
@@ -100,7 +98,7 @@ fun ReviewTab(
                     )
                 },
                 onClick = {
-                    viewModel.onEvent(AddEditMovieEvent.ChangeInputDialogVisibility)
+                    onEvent(AddEditMovieEvent.ChangeInputDialogVisibility)
                 }
             )
             ReadOnlyTextField(

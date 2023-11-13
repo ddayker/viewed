@@ -72,8 +72,8 @@ fun ColumnScope.AddItem(
         onClick = { elementOnClick(screen.route) },
         colors = NavigationRailItemDefaults.colors(
             selectedIconColor = MaterialTheme.colorScheme.onTertiaryContainer,
-            unselectedIconColor = MaterialTheme.colorScheme.tertiaryContainer,
-            selectedTextColor = MaterialTheme.colorScheme.tertiaryContainer,
+            unselectedIconColor = MaterialTheme.colorScheme.onTertiary,
+            selectedTextColor = MaterialTheme.colorScheme.onTertiary,
             indicatorColor = MaterialTheme.colorScheme.background
         ),
         modifier = Modifier.padding(start = 20.dp, end = 10.dp, top = 10.dp, bottom = 10.dp)

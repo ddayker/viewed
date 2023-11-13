@@ -8,10 +8,10 @@
             <InsightsFilterSettings>
               <option name="connection">
                 <ConnectionSetting>
-                  <option name="appId" value="PLACEHOLDER" />
-                  <option name="mobileSdkAppId" value="" />
-                  <option name="projectId" value="" />
-                  <option name="projectNumber" value="" />
+                  <option name="appId" value="com.dayker.viewed" />
+                  <option name="mobileSdkAppId" value="1:108653913355:android:4e7039279fdf4912426e0e" />
+                  <option name="projectId" value="viewed-movies" />
+                  <option name="projectNumber" value="108653913355" />
                 </ConnectionSetting>
               </option>
               <option name="signal" value="SIGNAL_UNSPECIFIED" />

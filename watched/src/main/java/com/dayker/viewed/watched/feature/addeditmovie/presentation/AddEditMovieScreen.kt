@@ -54,11 +54,13 @@ fun AddEditMovieScreen(
                         val routeWithParams =
                             "${WatchedScreen.WatchedMovieScreen.route}/${action.id}"
                         navController.navigate(routeWithParams) {
-                            navController.previousBackStackEntry?.destination?.let {
-                                popUpTo(it.id) {
-                                    inclusive = true
+                            if (navController.previousBackStackEntry?.destination?.route == WatchedScreen.WatchedMovieScreen.route) {
+                                navController.previousBackStackEntry?.destination?.let {
+                                    popUpTo(it.id) {
+                                        inclusive = true
+                                    }
                                 }
-                            }
+                            } else navController.navigateUp()
                         }
                     } else {
                         viewModel.onEvent(AddEditMovieEvent.ChangeSavingErrorDialogVisibility)
@@ -103,7 +105,10 @@ fun AddEditMovieScreen(
     )
     Scaffold(
         snackbarHost = {
-            SnackbarHost(hostState = snackbarHostState)
+            SnackbarHost(
+                hostState = snackbarHostState,
+                modifier = Modifier.padding(horizontal = 20.dp)
+            )
         },
         modifier = modifier,
         topBar = {
@@ -154,10 +159,26 @@ fun AddEditMovieScreen(
                         viewModel.onEvent(AddEditMovieEvent.ChangeTabPosition(index))
                     })
                 when (viewModel.state.value.selectedTabIndex) {
-                    AddEditRow.Movie.ordinal -> MovieTab()
-                    AddEditRow.Image.ordinal -> ImageTab(windowSize = windowSize)
-                    AddEditRow.Review.ordinal -> ReviewTab()
-                    AddEditRow.Details.ordinal -> DetailsTab()
+                    AddEditRow.Movie.ordinal -> MovieTab(
+                        state = viewModel.state.value,
+                        onEvent = viewModel::onEvent
+                    )
+
+                    AddEditRow.Image.ordinal -> ImageTab(
+                        windowSize = windowSize,
+                        state = viewModel.state.value,
+                        onEvent = viewModel::onEvent
+                    )
+
+                    AddEditRow.Review.ordinal -> ReviewTab(
+                        state = viewModel.state.value,
+                        onEvent = viewModel::onEvent
+                    )
+
+                    AddEditRow.Details.ordinal -> DetailsTab(
+                        state = viewModel.state.value,
+                        onEvent = viewModel::onEvent
+                    )
                 }
             }
         }

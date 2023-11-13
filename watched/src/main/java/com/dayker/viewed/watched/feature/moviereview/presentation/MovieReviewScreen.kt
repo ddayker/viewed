@@ -55,7 +55,7 @@ fun MovieReviewScreen(
         modifier = modifier,
         topBar = {
             MovieInfoTopBar(
-                color = MaterialTheme.colorScheme.tertiaryContainer,
+                color = MaterialTheme.colorScheme.secondaryContainer,
                 onBackClicked = {
                     viewModel.onEvent(MovieReviewEvent.BackClicked)
                 },
@@ -76,7 +76,7 @@ fun MovieReviewScreen(
                     Box(
                         modifier = Modifier
                             .fillMaxSize()
-                            .background(color = MaterialTheme.colorScheme.tertiaryContainer),
+                            .background(color = MaterialTheme.colorScheme.secondaryContainer),
                         contentAlignment = Alignment.Center
                     ) {
                         MovieImage(
