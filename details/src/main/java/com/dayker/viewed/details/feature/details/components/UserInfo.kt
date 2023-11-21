@@ -31,7 +31,7 @@ import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.dayker.details.R
-import com.dayker.viewed.authentication.module.User
+import com.dayker.viewed.authentication.domain.module.User
 import com.dayker.viewed.core.ui.components.animatedBorder
 import com.dayker.viewed.details.feature.details.DetailsScreenEvent
 

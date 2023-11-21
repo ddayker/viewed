@@ -4,13 +4,13 @@ import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.dayker.viewed.authentication.client.GoogleAuthClient
+import com.dayker.viewed.authentication.domain.client.AuthClient
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.launch
 
 class DetailsViewModel(
-    private val authClient: GoogleAuthClient,
+    private val authClient: AuthClient,
 ) : ViewModel() {
     private val _state = mutableStateOf(DetailsState())
     val state: State<DetailsState> = _state
@@ -26,7 +26,7 @@ class DetailsViewModel(
         when (event) {
             DetailsScreenEvent.OnSignInClicked -> {
                 viewModelScope.launch {
-                    val signInIntentSender = authClient.signIn()
+                    val signInIntentSender = authClient.initiateSignIn()
                     _actionFlow.emit(DetailsScreenAction.ShowSignInRequest(signInIntentSender))
                 }
             }
@@ -51,7 +51,7 @@ class DetailsViewModel(
 
             is DetailsScreenEvent.OnSignInRequest -> {
                 viewModelScope.launch {
-                    val signInResult = authClient.signInWithIntent(
+                    val signInResult = authClient.completeSignIn(
                         intent = event.intent ?: return@launch
                     )
                     _state.value = state.value.copy(user = signInResult.data)

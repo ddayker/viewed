@@ -10,6 +10,8 @@ sealed class WatchedMoviesScreenEvent {
     object ExtendFAB : WatchedMoviesScreenEvent()
     object AddManuallyClicked : WatchedMoviesScreenEvent()
     object AddBySearchClicked : WatchedMoviesScreenEvent()
+    object AddToAccountClicked : WatchedMoviesScreenEvent()
+    object DeleteLocalClicked : WatchedMoviesScreenEvent()
     data class MovieClicked(val id: Long) : WatchedMoviesScreenEvent()
 
 }

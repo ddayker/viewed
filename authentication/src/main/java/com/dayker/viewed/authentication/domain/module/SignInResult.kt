@@ -1,4 +1,4 @@
-package com.dayker.viewed.authentication.module
+package com.dayker.viewed.authentication.domain.module
 
 data class SignInResult(
     val data: User?,

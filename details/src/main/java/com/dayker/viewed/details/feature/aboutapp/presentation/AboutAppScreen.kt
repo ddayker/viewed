@@ -10,16 +10,15 @@ import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.windowsizeclass.WindowSizeClass
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import com.dayker.details.R
+import com.dayker.viewed.core.presentation.Container
 import com.dayker.viewed.details.common.utils.Contacts
 import com.dayker.viewed.details.feature.aboutapp.presentation.components.AboutAppBottomBar
 import com.dayker.viewed.details.feature.aboutapp.presentation.components.AboutAppScreenContent
 import com.dayker.viewed.details.feature.aboutapp.presentation.components.AboutAppTopBar
-import kotlinx.coroutines.flow.collectLatest
 import org.koin.androidx.compose.getViewModel
 
 @OptIn(ExperimentalFoundationApi::class)
@@ -38,11 +37,9 @@ fun AboutAppScreen(
     val mailto = createBugReportMailto(context)
     val tagUrl = Contacts.LINKEDIN_LINK
 
-    LaunchedEffect(key1 = true) {
-        viewModel.intentFlow.collectLatest { intent ->
-            if (intent.resolveActivity(context.packageManager) != null) {
-                context.startActivity(intent)
-            }
+    Container(viewModel.intentFlow) { intent ->
+        if (intent.resolveActivity(context.packageManager) != null) {
+            context.startActivity(intent)
         }
     }
 

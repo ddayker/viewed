@@ -20,13 +20,13 @@ import androidx.compose.material3.ScaffoldDefaults
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.windowsizeclass.WindowSizeClass
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import com.dayker.viewed.core.presentation.Container
 import com.dayker.viewed.core.ui.components.CircularLoading
 import com.dayker.viewed.watched.R
 import com.dayker.viewed.watched.common.platform.navigation.WatchedNavGraphConstants.NEW_MOVIE_ID_KEY
@@ -45,15 +45,13 @@ fun MovieSearchingScreen(
     viewModel: MovieSearchingViewModel = getViewModel()
 ) {
     val state = viewModel.state.value
-    LaunchedEffect(key1 = true) {
-        viewModel.actionFlow.collect() { action ->
-            when (action) {
-                MovieSearchingScreenAction.GoBack -> navController.navigateUp()
-                is MovieSearchingScreenAction.GoToAdding -> {
-                    val routeWithParams =
-                        "${WatchedScreen.AddEditMovieScreen.route}?${NEW_MOVIE_ID_KEY}=${action.id}"
-                    navController.navigate(routeWithParams)
-                }
+    Container(viewModel.actionFlow) { action ->
+        when (action) {
+            MovieSearchingScreenAction.GoBack -> navController.navigateUp()
+            is MovieSearchingScreenAction.GoToAdding -> {
+                val routeWithParams =
+                    "${WatchedScreen.AddEditMovieScreen.route}?${NEW_MOVIE_ID_KEY}=${action.id}"
+                navController.navigate(routeWithParams)
             }
         }
     }

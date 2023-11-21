@@ -30,7 +30,8 @@ class MovieReviewViewModel(
                 viewModelScope.launch {
                     watchedRepository.getMovieById(id)?.also { movie ->
                         _state.value = state.value.copy(
-                            movie = movie.copy()
+                            movie = movie.copy(),
+                            isLoading = false
                         )
                     }
                 }

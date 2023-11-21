@@ -1,4 +1,4 @@
-package com.dayker.viewed.watched.common.data.datasource.remote.dto
+package com.dayker.viewed.watched.common.data.datasource.moviesearching.remote.dto
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable

@@ -1,7 +1,7 @@
 package com.dayker.viewed.watched.common.data.mapper
 
-import com.dayker.viewed.watched.common.data.datasource.remote.dto.MovieInfo
-import com.dayker.viewed.watched.common.data.datasource.remote.dto.MovieResponse
+import com.dayker.viewed.watched.common.data.datasource.moviesearching.remote.dto.MovieInfo
+import com.dayker.viewed.watched.common.data.datasource.moviesearching.remote.dto.MovieResponse
 import com.dayker.viewed.watched.common.domain.model.Movie
 import com.dayker.viewed.watched.common.domain.model.MoviePoster
 

@@ -1,7 +1,7 @@
 package com.dayker.viewed.watched.common.data.repository
 
 import com.dayker.viewed.core.util.Resource
-import com.dayker.viewed.watched.common.data.datasource.MovieSearchingDataSource
+import com.dayker.viewed.watched.common.data.datasource.moviesearching.MovieSearchingDataSource
 import com.dayker.viewed.watched.common.data.mapper.Movie
 import com.dayker.viewed.watched.common.data.mapper.MoviePoster
 import com.dayker.viewed.watched.common.domain.model.Movie

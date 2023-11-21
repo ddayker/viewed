@@ -75,4 +75,7 @@
     <string name="writers">Writers</string>
     <string name="stars_">Stars</string>
     <string name="empty_review">---</string>
+    <string name="unsaved_data_was_found_on_the_device">Unsaved data was found on the device!</string>
+    <string name="add_to_google_account">Add to Google account</string>
+    <string name="delete_permanently">Delete permanently</string>
 </resources>

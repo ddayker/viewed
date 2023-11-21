@@ -1,4 +1,4 @@
-package com.dayker.viewed.watched.common.data.datasource.remote
+package com.dayker.viewed.watched.common.data.datasource.moviesearching.remote
 
 import com.dayker.viewed.watched.BuildConfig
 

@@ -1,9 +1,10 @@
-package com.dayker.viewed.authentication.client
+package com.dayker.viewed.authentication.data.client
 
 import android.content.Intent
 import android.content.IntentSender
-import com.dayker.viewed.authentication.module.SignInResult
-import com.dayker.viewed.authentication.module.User
+import com.dayker.viewed.authentication.domain.client.AuthClient
+import com.dayker.viewed.authentication.domain.module.SignInResult
+import com.dayker.viewed.authentication.domain.module.User
 import com.google.android.gms.auth.api.identity.BeginSignInRequest
 import com.google.android.gms.auth.api.identity.SignInClient
 import com.google.firebase.auth.GoogleAuthProvider
@@ -15,10 +16,10 @@ import java.util.concurrent.CancellationException
 class GoogleAuthClient(
     private val oneTapClient: SignInClient,
     private val signInRequest: BeginSignInRequest
-) {
+) : AuthClient {
     private val auth = Firebase.auth
 
-    suspend fun signIn(): IntentSender? {
+    override suspend fun initiateSignIn(): IntentSender? {
         val result = try {
             oneTapClient.beginSignIn(
                 signInRequest
@@ -31,7 +32,7 @@ class GoogleAuthClient(
         return result?.pendingIntent?.intentSender
     }
 
-    suspend fun signInWithIntent(intent: Intent): SignInResult {
+    override suspend fun completeSignIn(intent: Intent): SignInResult {
         val credential = oneTapClient.getSignInCredentialFromIntent(intent)
         val googleIdToken = credential.googleIdToken
         val googleCredentials = GoogleAuthProvider.getCredential(googleIdToken, null)
@@ -58,7 +59,7 @@ class GoogleAuthClient(
         }
     }
 
-    suspend fun signOut() {
+    override suspend fun signOut() {
         try {
             oneTapClient.signOut().await()
             auth.signOut()
@@ -68,7 +69,7 @@ class GoogleAuthClient(
         }
     }
 
-    fun getSignedInUser(): User? = auth.currentUser?.run {
+    override fun getSignedInUser(): User? = auth.currentUser?.run {
         User(
             userId = uid,
             username = displayName,

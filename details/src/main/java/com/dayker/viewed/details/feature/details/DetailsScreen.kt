@@ -20,8 +20,8 @@ import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -29,6 +29,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.dayker.details.R
+import com.dayker.viewed.core.presentation.Container
 import com.dayker.viewed.core.ui.components.GoogleSignInButton
 import com.dayker.viewed.details.common.navigation.DetailsScreen
 import com.dayker.viewed.details.feature.details.components.DetailsItem
@@ -44,6 +45,7 @@ fun DetailsScreen(
 ) {
     val user = viewModel.state.value.user
     val snackbarHostState = remember { SnackbarHostState() }
+    val coroutineScope = rememberCoroutineScope()
     val launcher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.StartIntentSenderForResult(),
         onResult = { result ->
@@ -52,32 +54,32 @@ fun DetailsScreen(
             }
         }
     )
-    LaunchedEffect(key1 = true) {
-        viewModel.actionFlow.collect() { action ->
-            when (action) {
-                is DetailsScreenAction.ShowErrorMessage -> {
+    Container(viewModel.actionFlow) { action ->
+        when (action) {
+            is DetailsScreenAction.ShowErrorMessage -> {
+                coroutineScope.launch {
                     snackbarHostState.showSnackbar(
                         message = action.message,
                         duration = SnackbarDuration.Short
                     )
                 }
+            }
 
-                is DetailsScreenAction.ShowSignInRequest -> {
-                    launch {
-                        launcher.launch(
-                            IntentSenderRequest.Builder(
-                                action.intentSender ?: return@launch
-                            ).build()
-                        )
-                    }
-                }
+            is DetailsScreenAction.ShowSignInRequest -> {
+                launcher.launch(
+                    IntentSenderRequest.Builder(
+                        action.intentSender ?: return@Container
+                    ).build()
+                )
+            }
 
-                DetailsScreenAction.OpenAboutApp -> {
-                    navController.navigate(DetailsScreen.AboutApp.route)
-                }
+
+            DetailsScreenAction.OpenAboutApp -> {
+                navController.navigate(DetailsScreen.AboutApp.route)
             }
         }
     }
+
     Scaffold(
         modifier = modifier,
         snackbarHost = {

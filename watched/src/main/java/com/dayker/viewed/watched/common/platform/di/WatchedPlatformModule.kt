@@ -2,7 +2,7 @@ package com.dayker.viewed.watched.common.platform.di
 
 import android.content.ContentResolver
 import androidx.room.Room
-import com.dayker.viewed.watched.common.platform.datasource.images.ImageDataSource
+import com.dayker.viewed.watched.common.platform.datasource.images.AndroidImageDataSource
 import com.dayker.viewed.watched.common.platform.datasource.images.LocalImageDataSource
 import com.dayker.viewed.watched.common.platform.datasource.movies.DatabaseMoviesDataSource
 import com.dayker.viewed.watched.common.platform.datasource.movies.LocalMoviesDataSource
@@ -33,8 +33,8 @@ val watchedPlatformModule = module {
         bind<LocalMoviesDataSource>()
     }
 
-    singleOf(::LocalImageDataSource) {
-        bind<ImageDataSource>()
+    singleOf(::AndroidImageDataSource) {
+        bind<LocalImageDataSource>()
     }
 
     single<File> {

@@ -15,14 +15,15 @@ import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.material3.windowsizeclass.WindowSizeClass
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import com.dayker.viewed.core.presentation.Container
 import com.dayker.viewed.core.ui.components.CircularLoading
 import com.dayker.viewed.watched.R
 import com.dayker.viewed.watched.common.platform.navigation.WatchedScreen
@@ -35,6 +36,7 @@ import com.dayker.viewed.watched.feature.addeditmovie.presentation.components.ta
 import com.dayker.viewed.watched.feature.addeditmovie.presentation.components.tabs.ImageTab
 import com.dayker.viewed.watched.feature.addeditmovie.presentation.components.tabs.MovieTab
 import com.dayker.viewed.watched.feature.addeditmovie.presentation.components.tabs.ReviewTab
+import kotlinx.coroutines.launch
 import org.koin.androidx.compose.getViewModel
 
 @Composable
@@ -45,40 +47,41 @@ fun AddEditMovieScreen(
     viewModel: AddEditMovieViewModel = getViewModel()
 ) {
     val snackbarHostState = remember { SnackbarHostState() }
+    val coroutineScope = rememberCoroutineScope()
     val errorMessage = stringResource(R.string.movie_not_found)
-    LaunchedEffect(key1 = true) {
-        viewModel.actionFlow.collect() { action ->
-            when (action) {
-                is AddEditMovieScreenAction.SaveMovie -> {
-                    if (action.isPossibleToSave) {
-                        val routeWithParams =
-                            "${WatchedScreen.WatchedMovieScreen.route}/${action.id}"
-                        navController.navigate(routeWithParams) {
-                            if (navController.previousBackStackEntry?.destination?.route == WatchedScreen.WatchedMovieScreen.route) {
-                                navController.previousBackStackEntry?.destination?.let {
-                                    popUpTo(it.id) {
-                                        inclusive = true
-                                    }
+    Container(viewModel.actionFlow) { action ->
+        when (action) {
+            is AddEditMovieScreenAction.SaveMovie -> {
+                if (action.isPossibleToSave) {
+                    val routeWithParams =
+                        "${WatchedScreen.WatchedMovieScreen.route}/${action.id}"
+                    navController.navigate(routeWithParams) {
+                        if (navController.previousBackStackEntry?.destination?.route == WatchedScreen.WatchedMovieScreen.route) {
+                            navController.previousBackStackEntry?.destination?.let {
+                                popUpTo(it.id) {
+                                    inclusive = true
                                 }
-                            } else navController.navigateUp()
-                        }
-                    } else {
-                        viewModel.onEvent(AddEditMovieEvent.ChangeSavingErrorDialogVisibility)
+                            }
+                        } else navController.navigateUp()
                     }
+                } else {
+                    viewModel.onEvent(AddEditMovieEvent.ChangeSavingErrorDialogVisibility)
                 }
+            }
 
-                AddEditMovieScreenAction.DeleteMovie -> {
-                    navController.apply {
-                        popBackStack()
-                        navigateUp()
-                    }
+            AddEditMovieScreenAction.DeleteMovie -> {
+                navController.apply {
+                    popBackStack()
+                    navigateUp()
                 }
+            }
 
-                AddEditMovieScreenAction.ReturnBack -> {
-                    navController.navigateUp()
-                }
+            AddEditMovieScreenAction.ReturnBack -> {
+                navController.navigateUp()
+            }
 
-                AddEditMovieScreenAction.ShowError -> {
+            AddEditMovieScreenAction.ShowError -> {
+                coroutineScope.launch {
                     snackbarHostState.showSnackbar(
                         message = errorMessage,
                         duration = SnackbarDuration.Short

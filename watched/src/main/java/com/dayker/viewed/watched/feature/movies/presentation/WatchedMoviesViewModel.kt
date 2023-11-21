@@ -5,6 +5,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.dayker.viewed.core.util.Resource
+import com.dayker.viewed.watched.common.domain.repository.WatchedMoviesRepository
 import com.dayker.viewed.watched.common.domain.usecase.GetWatchedMoviesUseCase
 import com.dayker.viewed.watched.common.domain.util.MoviesOrder
 import com.dayker.viewed.watched.common.domain.util.OrderType
@@ -16,7 +17,8 @@ import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 
 class WatchedMoviesViewModel(
-    private val getWatchedMoviesUseCase: GetWatchedMoviesUseCase
+    private val getWatchedMoviesUseCase: GetWatchedMoviesUseCase,
+    private val repository: WatchedMoviesRepository
 ) : ViewModel() {
 
     private val _state = mutableStateOf(WatchedMoviesState())
@@ -28,6 +30,12 @@ class WatchedMoviesViewModel(
     private var getMoviesJob: Job? = null
 
     init {
+        viewModelScope.launch {
+            if (repository.isUnsavedLocalData()) {
+                _state.value = state.value.copy(isUnsavedLocalData = true)
+            }
+        }
+
         getMovies(MoviesOrder.Rating(OrderType.Descending))
     }
 
@@ -118,6 +126,20 @@ class WatchedMoviesViewModel(
             is WatchedMoviesScreenEvent.MovieClicked -> {
                 viewModelScope.launch {
                     _actionFlow.emit(WatchedMoviesScreenAction.OpenMovieInfo(id = event.id))
+                }
+            }
+
+            WatchedMoviesScreenEvent.AddToAccountClicked -> {
+                _state.value = state.value.copy(isUnsavedLocalData = false)
+                viewModelScope.launch() {
+                    repository.transferDataFromLocalToRemote()
+                }
+            }
+
+            WatchedMoviesScreenEvent.DeleteLocalClicked -> {
+                _state.value = state.value.copy(isUnsavedLocalData = false)
+                viewModelScope.launch() {
+                    repository.clearLocalData()
                 }
             }
         }

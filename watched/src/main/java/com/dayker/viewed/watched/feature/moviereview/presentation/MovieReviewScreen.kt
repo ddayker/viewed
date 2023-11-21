@@ -9,11 +9,11 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.windowsizeclass.WindowSizeClass
 import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import com.dayker.viewed.core.presentation.Container
 import com.dayker.viewed.core.ui.components.CircularLoading
 import com.dayker.viewed.core.ui.components.MovieImage
 import com.dayker.viewed.watched.common.platform.navigation.WatchedNavGraphConstants.SAVED_MOVIE_ID_KEY
@@ -32,21 +32,19 @@ fun MovieReviewScreen(
     navController: NavController,
     viewModel: MovieReviewViewModel = getViewModel()
 ) {
-    LaunchedEffect(key1 = true) {
-        viewModel.actionFlow.collect() { action ->
-            when (action) {
-                MovieReviewScreenAction.GoBack -> {
-                    navController.apply {
-                        popBackStack()
-                        navigateUp()
-                    }
+    Container(viewModel.actionFlow) { action ->
+        when (action) {
+            MovieReviewScreenAction.GoBack -> {
+                navController.apply {
+                    popBackStack()
+                    navigateUp()
                 }
+            }
 
-                is MovieReviewScreenAction.GoToEditing -> {
-                    val routeWithParams =
-                        "${WatchedScreen.AddEditMovieScreen.route}?${SAVED_MOVIE_ID_KEY}=${action.id}"
-                    navController.navigate(route = routeWithParams)
-                }
+            is MovieReviewScreenAction.GoToEditing -> {
+                val routeWithParams =
+                    "${WatchedScreen.AddEditMovieScreen.route}?${SAVED_MOVIE_ID_KEY}=${action.id}"
+                navController.navigate(route = routeWithParams)
             }
         }
     }
@@ -55,7 +53,7 @@ fun MovieReviewScreen(
         modifier = modifier,
         topBar = {
             MovieInfoTopBar(
-                color = MaterialTheme.colorScheme.secondaryContainer,
+                color = MaterialTheme.colorScheme.scrim,
                 onBackClicked = {
                     viewModel.onEvent(MovieReviewEvent.BackClicked)
                 },
@@ -66,7 +64,12 @@ fun MovieReviewScreen(
         }
     ) {
         if (viewModel.state.value.isLoading) {
-            Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+            Box(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .background(color = MaterialTheme.colorScheme.scrim),
+                contentAlignment = Alignment.Center
+            ) {
                 CircularLoading()
             }
         } else {
@@ -76,7 +79,7 @@ fun MovieReviewScreen(
                     Box(
                         modifier = Modifier
                             .fillMaxSize()
-                            .background(color = MaterialTheme.colorScheme.secondaryContainer),
+                            .background(color = MaterialTheme.colorScheme.scrim),
                         contentAlignment = Alignment.Center
                     ) {
                         MovieImage(

@@ -1,6 +1,7 @@
 package com.dayker.viewed.authentication.di
 
-import com.dayker.viewed.authentication.client.GoogleAuthClient
+import com.dayker.viewed.authentication.data.client.GoogleAuthClient
+import com.dayker.viewed.authentication.domain.client.AuthClient
 import com.google.android.gms.auth.api.identity.BeginSignInRequest
 import com.google.android.gms.auth.api.identity.Identity
 import org.koin.android.ext.koin.androidContext
@@ -8,7 +9,7 @@ import org.koin.dsl.module
 
 val authenticationModule = module {
 
-    single {
+    single<AuthClient> {
         GoogleAuthClient(
             oneTapClient = Identity.getSignInClient(androidContext()),
             signInRequest = get()
