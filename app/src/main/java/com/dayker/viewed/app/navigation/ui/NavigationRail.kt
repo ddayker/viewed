@@ -69,7 +69,11 @@ fun ColumnScope.AddItem(
         },
         selected = isActive,
         alwaysShowLabel = false,
-        onClick = { elementOnClick(screen.route) },
+        onClick = {
+            if (!isActive) {
+                elementOnClick(screen.route)
+            }
+        },
         colors = NavigationRailItemDefaults.colors(
             selectedIconColor = MaterialTheme.colorScheme.onTertiaryContainer,
             unselectedIconColor = MaterialTheme.colorScheme.onTertiary,
