@@ -9,7 +9,7 @@
     <string name="_10">10</string>
     <string name="rating_format">%1$s/</string>
     <string name="_min">" min"</string>
-    <string name="no_movie_message">No movie has been\n added yet 💔</string>
+    <string name="no_movie_message"> Start adding your watched movies 👀</string>
     <string name="your_movies">Your movies</string>
     <string name="watched_count_format">(%1$s)</string>
     <string name="adding">Adding</string>

@@ -53,33 +53,28 @@ class FirestoreMoviesDataSource(
     }
 
     override suspend fun saveMovie(movie: Movie, userId: String): Long {
+        var newMovie = movie
         try {
             val userMoviesCollection = firestore.collection(USERS_DIR)
                 .document(userId)
                 .collection(USER_MOVIES_DIR)
-            val newMovie = if (movie.id == null) {
-                movie.copy(id = System.currentTimeMillis()).also {
-                    userMoviesCollection.add(it)
-                }
+            if (movie.id == null) {
+                newMovie = movie.copy(id = System.currentTimeMillis())
+                userMoviesCollection.add(newMovie)
             } else {
                 val querySnapshot = getQuerySnapshotForMovieId(userMoviesCollection, movie.id)
-                val existingDocument = querySnapshot.documents.firstOrNull()
-                if (existingDocument != null) {
-                    val documentId = existingDocument.id
-                    movie.copy(id = documentId.toLong()).also {
-                        userMoviesCollection.document(documentId).set(it)
-                    }
+                if (!querySnapshot.isEmpty) {
+                    val documentId = querySnapshot.firstOrNull()?.id
+                    documentId?.let { userMoviesCollection.document(it).set(movie) }
                 } else {
-                    movie.copy(id = System.currentTimeMillis()).also {
-                        userMoviesCollection.add(it)
-                    }
+                    newMovie = movie.copy(id = System.currentTimeMillis())
+                    userMoviesCollection.add(newMovie)
                 }
             }
-            return newMovie.id ?: -1L
         } catch (e: Exception) {
             println(e.message)
         }
-        return -1L
+        return newMovie.id ?: -1L
     }
 
     override suspend fun deleteMovie(movie: Movie, userId: String) {
