@@ -9,15 +9,12 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.rememberDatePickerState
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableLongStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import com.dayker.viewed.watched.R
-import java.time.LocalDate
-import java.util.Calendar
+import java.time.LocalDateTime
+import java.time.ZoneId
+import java.util.concurrent.TimeUnit
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -28,18 +25,15 @@ fun CalendarPickerDialog(
     onConfirm: (Long) -> Unit,
     pickedDate: Long?
 ) {
-    val calendar = Calendar.getInstance()
-    calendar.set(LocalDate.now().year, LocalDate.now().monthValue - 1, LocalDate.now().dayOfMonth)
-
-    val datePickerState = rememberDatePickerState(
-        initialSelectedDateMillis = calendar.timeInMillis,
-    )
-
-    var selectedDate by remember {
-        mutableLongStateOf(pickedDate ?: calendar.timeInMillis)
-    }
-
+    val dateTime = LocalDateTime.now()
     if (visible) {
+        val datePickerState = rememberDatePickerState(
+            initialSelectedDateMillis = if (pickedDate != null) pickedDate + TimeUnit.MILLISECONDS.convert(
+                1,
+                TimeUnit.DAYS
+            ) else dateTime.toMillis(),
+            yearRange = 1900..dateTime.year
+        )
         DatePickerDialog(
             modifier = modifier,
             onDismissRequest = {
@@ -47,8 +41,7 @@ fun CalendarPickerDialog(
             },
             confirmButton = {
                 TextButton(onClick = {
-                    selectedDate = datePickerState.selectedDateMillis!!
-                    onConfirm(selectedDate)
+                    onConfirm(datePickerState.selectedDateMillis!!)
                 }) {
                     Text(text = stringResource(R.string.confirm))
                 }
@@ -75,3 +68,5 @@ fun CalendarPickerDialog(
         }
     }
 }
+
+fun LocalDateTime.toMillis() = this.atZone(ZoneId.systemDefault()).toInstant().toEpochMilli()

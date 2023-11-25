@@ -46,7 +46,7 @@ fun ReviewTab(
 
     CalendarPickerDialog(
         visible = state.showCalendarDialog,
-        pickedDate = state.movie.releaseDate?.toLongDate(),
+        pickedDate = state.movie.viewingDate?.toLongDate(),
         onConfirm = { dateInMillis ->
             onEvent(AddEditMovieEvent.ChangeCalendarDialogVisibility)
             onEvent(AddEditMovieEvent.ChangeViewingDate(dateInMillis))

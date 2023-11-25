@@ -13,6 +13,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import androidx.navigation.NavGraph.Companion.findStartDestination
 import com.dayker.viewed.core.presentation.Container
 import com.dayker.viewed.core.ui.components.CircularLoading
 import com.dayker.viewed.core.ui.components.MovieImage
@@ -35,16 +36,18 @@ fun MovieReviewScreen(
     Container(viewModel.actionFlow) { action ->
         when (action) {
             MovieReviewScreenAction.GoBack -> {
-                navController.apply {
-                    popBackStack()
-                    navigateUp()
-                }
+                navController.popBackStack(
+                    navController.graph.findStartDestination().id,
+                    inclusive = false
+                )
             }
 
             is MovieReviewScreenAction.GoToEditing -> {
                 val routeWithParams =
                     "${WatchedScreen.AddEditMovieScreen.route}?${SAVED_MOVIE_ID_KEY}=${action.id}"
-                navController.navigate(route = routeWithParams)
+                navController.navigate(route = routeWithParams) {
+                    launchSingleTop = true
+                }
             }
         }
     }

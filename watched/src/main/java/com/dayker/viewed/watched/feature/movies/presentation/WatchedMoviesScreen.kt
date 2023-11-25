@@ -30,6 +30,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import androidx.navigation.NavGraph.Companion.findStartDestination
 import com.dayker.viewed.core.presentation.Container
 import com.dayker.viewed.core.ui.components.CircularLoading
 import com.dayker.viewed.watched.R
@@ -50,18 +51,24 @@ fun WatchedMoviesScreen(
     Container(viewModel.actionFlow) { action ->
         when (action) {
             WatchedMoviesScreenAction.OpenManuallyAdding -> {
-                navController.navigate(WatchedScreen.AddEditMovieScreen.route)
+                navController.navigate(WatchedScreen.AddEditMovieScreen.route) {
+                    popUpTo(navController.graph.findStartDestination().id) {
+                        saveState = true
+                    }
+                    launchSingleTop = true
+                    restoreState = true
+                }
             }
 
             is WatchedMoviesScreenAction.OpenMovieInfo -> {
                 val routeWithParams =
                     "${WatchedScreen.WatchedMovieScreen.route}/${action.id}"
                 navController.navigate(route = routeWithParams) {
-                    navController.previousBackStackEntry?.destination?.let {
-                        popUpTo(it.id) {
-                            inclusive = true
-                        }
+                    popUpTo(navController.graph.findStartDestination().id) {
+                        saveState = true
                     }
+                    launchSingleTop = true
+                    restoreState = true
                 }
             }
 

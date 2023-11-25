@@ -23,6 +23,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import androidx.navigation.NavGraph.Companion.findStartDestination
 import com.dayker.viewed.core.presentation.Container
 import com.dayker.viewed.core.ui.components.CircularLoading
 import com.dayker.viewed.watched.R
@@ -55,14 +56,25 @@ fun AddEditMovieScreen(
                 if (action.isPossibleToSave) {
                     val routeWithParams =
                         "${WatchedScreen.WatchedMovieScreen.route}/${action.id}"
-                    navController.navigate(routeWithParams) {
-                        if (navController.previousBackStackEntry?.destination?.route == WatchedScreen.WatchedMovieScreen.route) {
-                            navController.previousBackStackEntry?.destination?.let {
+                    val previousDestination = navController.previousBackStackEntry?.destination
+                    if (previousDestination?.id != navController.graph.findStartDestination().id) {
+                        navController.navigate(routeWithParams) {
+                            previousDestination?.id?.let {
+                                popUpTo(it) {
+                                    inclusive = true
+                                }
+                            }
+                            launchSingleTop = true
+                        }
+                    } else {
+                        navController.navigate(routeWithParams) {
+                            launchSingleTop = true
+                            navController.currentDestination?.let {
                                 popUpTo(it.id) {
                                     inclusive = true
                                 }
                             }
-                        } else navController.navigateUp()
+                        }
                     }
                 } else {
                     viewModel.onEvent(AddEditMovieEvent.ChangeSavingErrorDialogVisibility)
@@ -70,10 +82,10 @@ fun AddEditMovieScreen(
             }
 
             AddEditMovieScreenAction.DeleteMovie -> {
-                navController.apply {
-                    popBackStack()
-                    navigateUp()
-                }
+                navController.popBackStack(
+                    navController.graph.findStartDestination().id,
+                    inclusive = false
+                )
             }
 
             AddEditMovieScreenAction.ReturnBack -> {
