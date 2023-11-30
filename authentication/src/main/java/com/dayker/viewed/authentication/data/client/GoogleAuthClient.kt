@@ -13,7 +13,7 @@ import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.tasks.await
 import java.util.concurrent.CancellationException
 
-class GoogleAuthClient(
+internal class GoogleAuthClient(
     private val oneTapClient: SignInClient,
     private val signInRequest: BeginSignInRequest
 ) : AuthClient {

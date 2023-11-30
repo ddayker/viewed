@@ -23,7 +23,7 @@ import com.dayker.viewed.watched.common.domain.model.MoviePoster
 
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
-fun MoviePoster(
+internal fun MoviePoster(
     modifier: Modifier = Modifier,
     movie: MoviePoster,
     onMovieClick: (String) -> Unit

@@ -2,7 +2,7 @@ package com.dayker.viewed.watched.feature.addeditmovie.presentation
 
 import com.dayker.viewed.watched.common.domain.model.Movie
 
-data class AddEditState(
+internal data class AddEditState(
     val movie: Movie = Movie(),
     val loading: Boolean = false,
     val isEditing: Boolean = false,

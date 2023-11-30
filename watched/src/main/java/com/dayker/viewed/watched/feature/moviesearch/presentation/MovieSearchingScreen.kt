@@ -38,7 +38,7 @@ import org.koin.androidx.compose.getViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun MovieSearchingScreen(
+internal fun MovieSearchingScreen(
     modifier: Modifier = Modifier,
     navController: NavController,
     windowSize: WindowSizeClass,

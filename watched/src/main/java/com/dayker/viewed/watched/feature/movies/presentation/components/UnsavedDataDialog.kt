@@ -19,7 +19,7 @@ import com.dayker.viewed.watched.feature.movies.presentation.WatchedMoviesScreen
 
 
 @Composable
-fun UnsavedDataDialog(
+internal fun UnsavedDataDialog(
     visible: Boolean,
     onEvent: (WatchedMoviesScreenEvent) -> Unit,
 ) {

@@ -3,7 +3,7 @@ package com.dayker.viewed.watched.common.data.datasource.watchedmovies
 import com.dayker.viewed.watched.common.domain.model.Movie
 import kotlinx.coroutines.flow.Flow
 
-interface RemoteMoviesDataSource {
+internal interface RemoteMoviesDataSource {
 
     fun getMovies(userId: String): Flow<List<Movie>>
     suspend fun getMovieById(id: Long, userId: String): Movie?

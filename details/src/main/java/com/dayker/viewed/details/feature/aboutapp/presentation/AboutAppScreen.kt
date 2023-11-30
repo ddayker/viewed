@@ -23,7 +23,7 @@ import org.koin.androidx.compose.getViewModel
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun AboutAppScreen(
+internal fun AboutAppScreen(
     modifier: Modifier = Modifier,
     windowSize: WindowSizeClass,
     onBackButtonClicked: () -> Unit,

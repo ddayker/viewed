@@ -27,7 +27,7 @@ import com.google.accompanist.adaptive.VerticalTwoPaneStrategy
 import org.koin.androidx.compose.getViewModel
 
 @Composable
-fun MovieReviewScreen(
+internal fun MovieReviewScreen(
     modifier: Modifier = Modifier,
     windowSize: WindowSizeClass,
     navController: NavController,

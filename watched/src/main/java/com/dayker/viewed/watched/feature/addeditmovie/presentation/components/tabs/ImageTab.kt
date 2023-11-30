@@ -31,7 +31,7 @@ import com.google.accompanist.adaptive.VerticalTwoPaneStrategy
 
 @SuppressLint("Recycle")
 @Composable
-fun ImageTab(
+internal fun ImageTab(
     modifier: Modifier = Modifier,
     windowSize: WindowSizeClass,
     state: AddEditState,

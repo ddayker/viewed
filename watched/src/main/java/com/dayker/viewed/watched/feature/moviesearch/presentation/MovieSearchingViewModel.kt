@@ -15,7 +15,7 @@ import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 
-class MovieSearchingViewModel(
+internal class MovieSearchingViewModel(
     private val repository: MovieSearchingRepository
 ) : ViewModel() {
 

@@ -41,7 +41,7 @@ import kotlinx.coroutines.launch
 import org.koin.androidx.compose.getViewModel
 
 @Composable
-fun AddEditMovieScreen(
+internal fun AddEditMovieScreen(
     modifier: Modifier = Modifier,
     windowSize: WindowSizeClass,
     navController: NavController,

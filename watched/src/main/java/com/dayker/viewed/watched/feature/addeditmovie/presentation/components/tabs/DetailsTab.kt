@@ -28,7 +28,7 @@ import com.dayker.viewed.watched.feature.addeditmovie.presentation.components.el
 import com.dayker.viewed.watched.feature.addeditmovie.presentation.components.elements.ValueTitle
 
 @Composable
-fun DetailsTab(
+internal fun DetailsTab(
     modifier: Modifier = Modifier,
     state: AddEditState,
     onEvent: (AddEditMovieEvent) -> Unit

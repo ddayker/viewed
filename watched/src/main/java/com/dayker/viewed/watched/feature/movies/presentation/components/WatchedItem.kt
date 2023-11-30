@@ -31,7 +31,7 @@ import com.dayker.viewed.watched.common.domain.model.Movie
 
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
-fun WatchedItem(
+internal fun WatchedItem(
     modifier: Modifier = Modifier,
     movie: Movie,
     onMovieClick: (Long) -> Unit

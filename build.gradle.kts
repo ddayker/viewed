@@ -1,16 +1,24 @@
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+
 buildscript {
+    repositories {
+        google()
+        mavenCentral()
+    }
     dependencies {
-        classpath("com.google.gms:google-services:4.4.0")
+        classpath(libs.android.gradle)
+        classpath(libs.kotlin.gradle)
+        classpath(libs.services)
     }
 }
-// Top-level build file where you can add configuration options common to all sub-projects/modules.
-@Suppress("DSL_SCOPE_VIOLATION")
-plugins {
-    alias(libs.plugins.androidApplication) apply false
-    alias(libs.plugins.kotlinAndroid) apply false
-    alias(libs.plugins.serialization) apply false
-    alias(libs.plugins.ksp) apply false
-    alias(libs.plugins.androidLibrary) apply false
 
+allprojects {
+    tasks {
+        withType<KotlinCompile>().configureEach {
+            compilerOptions {
+                jvmTarget = Config.jvmTarget
+                languageVersion = Config.kotlinLanguageVersion
+            }
+        }
+    }
 }
-true // Needed to make the Suppress annotation work for the plugins block

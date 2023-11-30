@@ -19,7 +19,7 @@ import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 
-class AddEditMovieViewModel(
+internal class AddEditMovieViewModel(
     private val watchedRepository: WatchedMoviesRepository,
     private val movieSearchingRepository: MovieSearchingRepository,
     savedStateHandle: SavedStateHandle
