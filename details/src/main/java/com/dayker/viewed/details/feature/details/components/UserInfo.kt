@@ -36,7 +36,7 @@ import com.dayker.viewed.core.ui.components.animatedBorder
 import com.dayker.viewed.details.feature.details.DetailsScreenEvent
 
 @Composable
-fun UserInfo(
+internal fun UserInfo(
     modifier: Modifier = Modifier,
     user: User,
     isExpanded: Boolean,

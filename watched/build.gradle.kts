@@ -1,14 +1,12 @@
 import java.io.FileInputStream
 import java.util.Properties
 
-@Suppress("DSL_SCOPE_VIOLATION") // TODO: Remove once KTIJ-19369 is fixed
 plugins {
-    alias(libs.plugins.androidLibrary)
-    alias(libs.plugins.kotlinAndroid)
-    alias(libs.plugins.serialization)
+    id("com.dayker.android-library")
     alias(libs.plugins.ksp)
-    id("com.google.gms.google-services")
+    alias(libs.plugins.serialization)
 }
+
 
 val appProperties = Properties().apply {
     load(FileInputStream(File(rootProject.rootDir, "local.properties")))
@@ -16,44 +14,17 @@ val appProperties = Properties().apply {
 
 android {
     namespace = "com.dayker.viewed.watched"
-    compileSdk = 34
-
     defaultConfig {
-        minSdk = 26
-
-        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-        consumerProguardFiles("consumer-rules.pro")
         buildConfigField("String", "API_KEY", "\"${appProperties.getProperty("API_KEY")}\"")
     }
-
-    buildTypes {
-        release {
-            isMinifyEnabled = false
-            proguardFiles(
-                getDefaultProguardFile("proguard-android-optimize.txt"),
-                "proguard-rules.pro"
-            )
-        }
-    }
     buildFeatures {
-        compose = true
         buildConfig = true
-    }
-    composeOptions {
-        kotlinCompilerExtensionVersion = "1.4.3"
-    }
-    compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_17
-        targetCompatibility = JavaVersion.VERSION_17
-    }
-    kotlinOptions {
-        jvmTarget = "17"
+        compose = true
+        androidResources = true
     }
 }
 
 dependencies {
-
-    implementation(libs.core.ktx)
     implementation(libs.lifecycle.runtime.ktx)
     implementation(libs.activity.compose)
     implementation(platform(libs.compose.bom))
@@ -119,6 +90,6 @@ dependencies {
     implementation(libs.material3.window.size)
     ksp(libs.room.compiler)
 
-    implementation(project(":core"))
-    implementation(project(":authentication"))
+    implementation(projects.authentication)
+    implementation(projects.core)
 }

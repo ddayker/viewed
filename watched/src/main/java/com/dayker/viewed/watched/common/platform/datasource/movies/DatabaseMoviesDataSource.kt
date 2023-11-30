@@ -7,7 +7,7 @@ import com.dayker.viewed.watched.common.platform.mapper.MovieEntity
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 
-class DatabaseMoviesDataSource(
+internal class DatabaseMoviesDataSource(
     private val dao: MovieDao
 ) : LocalMoviesDataSource {
 

@@ -30,7 +30,7 @@ import com.dayker.viewed.watched.R
 import com.dayker.viewed.watched.common.domain.model.Movie
 
 @Composable
-fun MovieReview(
+internal fun MovieReview(
     modifier: Modifier = Modifier,
     movie: Movie
 ) {

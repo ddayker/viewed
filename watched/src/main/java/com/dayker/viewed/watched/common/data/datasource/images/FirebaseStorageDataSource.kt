@@ -4,7 +4,7 @@ import androidx.core.net.toUri
 import com.google.firebase.storage.StorageReference
 import kotlinx.coroutines.tasks.await
 
-class FirebaseStorageDataSource(
+internal class FirebaseStorageDataSource(
     private val storage: StorageReference
 ) : RemoteImageDataSource {
 

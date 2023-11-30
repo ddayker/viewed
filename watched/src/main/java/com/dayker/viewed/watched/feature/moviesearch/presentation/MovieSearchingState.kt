@@ -2,7 +2,7 @@ package com.dayker.viewed.watched.feature.moviesearch.presentation
 
 import com.dayker.viewed.watched.common.domain.model.MoviePoster
 
-sealed class MovieSearchingState(val query: String = "") {
+internal sealed class MovieSearchingState(val query: String = "") {
 
     class NoRequest(query: String) : MovieSearchingState(query)
     class Loading(query: String) : MovieSearchingState(query)

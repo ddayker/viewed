@@ -20,7 +20,7 @@ import io.ktor.http.URLProtocol
 import kotlinx.serialization.SerializationException
 import kotlinx.serialization.json.Json
 
-class NetworkMovieSearchingDataSource(
+internal class NetworkMovieSearchingDataSource(
     private val client: HttpClient
 ) : MovieSearchingDataSource {
     override suspend fun getMovies(query: String): Resource<List<MovieResponse>> {

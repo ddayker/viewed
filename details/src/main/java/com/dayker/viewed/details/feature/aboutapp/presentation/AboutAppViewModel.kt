@@ -8,7 +8,7 @@ import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.launch
 
-class AboutAppViewModel() : ViewModel() {
+internal class AboutAppViewModel() : ViewModel() {
 
     private val _intentFlow = MutableSharedFlow<Intent>()
     val intentFlow = _intentFlow.asSharedFlow()

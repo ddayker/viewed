@@ -14,7 +14,7 @@ import com.dayker.viewed.watched.common.domain.model.Movie
 import com.dayker.viewed.watched.common.domain.util.MoviesOrder
 
 @Composable
-fun WatchedList(
+internal fun WatchedList(
     modifier: Modifier = Modifier,
     isOrderSectionVisible: Boolean,
     movies: List<Movie> = emptyList(),

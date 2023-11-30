@@ -19,7 +19,7 @@ import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import java.io.FileNotFoundException
 
-class WatchedMoviesRepositoryImpl(
+internal class WatchedMoviesRepositoryImpl(
     private val localMoviesDataSource: LocalMoviesDataSource,
     private val localImageDataSource: LocalImageDataSource,
     private val remoteMoviesDataSource: RemoteMoviesDataSource,

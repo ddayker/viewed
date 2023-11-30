@@ -1,6 +1,6 @@
 package com.dayker.viewed.watched.feature.addeditmovie.presentation
 
-sealed class AddEditMovieEvent {
+internal sealed class AddEditMovieEvent {
     data class ChangeTabPosition(val tabIndex: Int) : AddEditMovieEvent()
     object ChangeInputDialogVisibility : AddEditMovieEvent()
     data class ChangeTitle(val title: String) : AddEditMovieEvent()

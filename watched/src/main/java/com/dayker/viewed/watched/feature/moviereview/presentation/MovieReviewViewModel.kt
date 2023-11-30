@@ -12,7 +12,7 @@ import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.launch
 
-class MovieReviewViewModel(
+internal class MovieReviewViewModel(
     private val watchedRepository: WatchedMoviesRepository,
     savedStateHandle: SavedStateHandle
 ) : ViewModel() {

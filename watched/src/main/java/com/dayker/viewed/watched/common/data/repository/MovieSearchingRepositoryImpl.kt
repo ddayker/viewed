@@ -10,7 +10,7 @@ import com.dayker.viewed.watched.common.domain.repository.MovieSearchingReposito
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 
-class MovieSearchingRepositoryImpl(
+internal class MovieSearchingRepositoryImpl(
     private val dataSource: MovieSearchingDataSource
 ) : MovieSearchingRepository {
     override suspend fun getMovies(query: String): Flow<Resource<List<MoviePoster>>> = flow {

@@ -5,7 +5,7 @@ import com.dayker.viewed.watched.common.domain.model.Movie
 import com.dayker.viewed.watched.common.domain.model.MoviePoster
 import kotlinx.coroutines.flow.Flow
 
-interface MovieSearchingRepository {
+internal interface MovieSearchingRepository {
 
     suspend fun getMovies(query: String): Flow<Resource<List<MoviePoster>>>
 

@@ -5,7 +5,7 @@ import android.content.ContentResolver
 import androidx.core.net.toUri
 import java.io.File
 
-class AndroidImageDataSource(
+internal class AndroidImageDataSource(
     private val filesDir: File,
     private val contentResolver: ContentResolver
 ) : LocalImageDataSource {
